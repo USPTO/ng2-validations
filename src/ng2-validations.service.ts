@@ -175,7 +175,7 @@ export class NgValidations {
 	setDefinitionsFromSource(url) {
 		this.http.getData(url)
 			.then((data) => {
-				this.validationDefinitions = data;
+				this.validationDefinitions = JSON.parse(data);
 			})
 			.catch(() => {
 				console.warn(`Unable to retrieve definitions from "${url}"...switching to local validation definitions`);
