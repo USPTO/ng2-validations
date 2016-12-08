@@ -1,5 +1,6 @@
 
 
+
 # Ng2-Validations
 FPNG service designed to make validations on Angular 2 forms easy.
 
@@ -113,7 +114,9 @@ You can loop through these arrays in your html template to notify the user of th
  - Create a form using Angular's FormBuilder and pass the FormGroup into bindFormValidations.
  - Create a private array property on your component class to hold the returned validation messages.
  - If you have multiple FormGroups pass each one into bindFormValidations separately. Add the returned messages to your validators array.
- - To ensure the validations remain correctly applied to each form control it is best to bundle the creation of each FormGroup into one createForm method and call this method on ngOnInit. Instead of using angular's native reset() method on the form call createForm again to reset it's values and apply the validations. 
+ - To ensure the validations remain correctly applied to each form control it is best to bundle the creation of each FormGroup into one createForm method and call this method on ngOnInit. Instead of using angular's native reset() method on the form call createForm again to reset it's values and apply the validations.
+
+ **One Form Group** 
 
 ```javascript
 // your-component.ts
@@ -145,8 +148,58 @@ export class <yourComponent> {
 		this.createForm()
 	}
 }
+```
 
+ **Multiple Form Groups** 
 
+```javascript
+// your-component.ts
+  
+export class <yourComponent> {
+
+	private validators //<= Array of validators for html template
+	private controls:Array<any> = []; // Array of controls
+	private sampleForm: FormGroup;
+	private passwordGroup:FormGroup;
+	
+	constructor(private ngValidations: NgValidations, private fb: FormBuildier){}
+	
+	ngOnInit() {
+	 	this.createForm();
+    }
+	
+	createForm() {
+		//Create the nested FormGroup
+		this.passwordGroup = this.fb.group({
+			'passwordOne': [],
+			'passwordTwo': []
+		})
+		
+		//Create main FormGroup
+		this.sampleForm = this.fb.group({
+			'username': [''],
+			'password': this.passwordGroup,
+			'email': ['']
+		})
+
+		//Use temp variable to apply validations and get validator messages
+		let tempCtr1 = this.ngValidations.bindFormValidations(this.sampleForm);
+		let tempCtr2 = this.ngValidations.bindFormValidations(this.passwordGroup);
+		
+		// Add controls and messages
+		this.controls = [...tempCtr1.controls, ...tempCtr2.controls];
+			// The messages only need to be returned once because the 
+			// bindFormValidations method returns all possible validators
+		this.validators = [...tempCtrl1.messages]
+		
+		
+	}
+	
+	// Use this to reset a form bound to dynamic validations
+	reset() {
+		this.createForm()
+	}
+}
 ```
 
 **Validator Messages in the HTML Template**
