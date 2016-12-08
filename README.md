@@ -116,7 +116,7 @@ You can loop through these arrays in your html template to notify the user of th
  - If you have multiple FormGroups pass each one into bindFormValidations separately. Add the returned messages to your validators array.
  - To ensure the validations remain correctly applied to each form control it is best to bundle the creation of each FormGroup into one createForm method and call this method on ngOnInit. Instead of using angular's native reset() method on the form call createForm again to reset it's values and apply the validations.
 
- **One Form Group** 
+**One Form Group** 
 
 ```javascript
 // your-component.ts
