@@ -219,4 +219,4 @@ This agreement or any reference to specific commercial products, processes, or s
 
 
 ![Public Domain](https://camo.githubusercontent.com/c5160f944848828fa33126d9a697e9abe43ea98f/687474703a2f2f692e6372656174697665636f6d6d6f6e732e6f72672f702f7a65726f2f312e302f38387833312e706e67)
-To the extent possible under law, https://github.com/USPTO/TrademarkStatusApp has waived all copyright and related or neighboring rights to Trademark Status Mobile Application. This work is published from: United States.
+	To the extent possible under law, https://github.com/USPTO/ng2-validations has waived all copyright and related or neighboring rights to ng2-validations This work is published from: United States.
