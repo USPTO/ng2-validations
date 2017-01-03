@@ -199,13 +199,15 @@ export class <yourComponent> {
 }
 ```
 
-**Validator Messages in the HTML Template**
+#### Validator Messages in the HTML Template ####
 
 Each validation definition is constructed as an object with two properties: A function and a message.  Angular Form's native validation methods will return any errors for a form control with the name of the function producing the failure.  These messages can be dynamically displayed in the HTML template by using  *ngFor  to loop through the validator's array for each form control. If the control has an error display the associated message with the *ngIf directive:  *ngIf="yourControl.hasError(validator.name)". Here, validator.name refers to the function key in the validator's definition object. 
 
 
    **Simple HTML Template**
-    This example uses abstract controls 'username', 'passwordOne', 'passwordTwo', and 'passwordGroup'
+
+   This example uses abstract controls 'username', 'passwordOne', 'passwordTwo', and 'passwordGroup'
+    
     
     <form>
     
