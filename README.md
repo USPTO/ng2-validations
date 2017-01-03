@@ -259,7 +259,7 @@ Each validation definition is constructed as an object with two properties: A fu
 		    </div>
 		</div>
     
-    <div *ngIf='passwordOne._touched && passwordTwo._touched && passwordGroup.invalid'>
+    	<div *ngIf='passwordOne._touched && passwordTwo._touched && passwordGroup.invalid'>
 				<div *ngFor='let validator of validators'>
 			    <p class='error-msg'
 				    *ngIf='passwordGroup.hasError(validator.name)'
