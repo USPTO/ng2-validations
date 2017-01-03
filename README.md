@@ -201,8 +201,75 @@ export class <yourComponent> {
 
 **Validator Messages in the HTML Template**
 
+Each validation definition is constructed as an object with two properties: A function and a message.  Angular Form's native validation methods will return any errors for a form control with the name of the function producing the failure.  These messages can be dynamically displayed in the HTML template by using  *ngFor  to loop through the validator's array for each form control. If the control has an error display the associated message with the *ngIf directive:  *ngIf="yourControl.hasError(validator.name)". Here, validator.name refers to the function key in the validator's definition object. 
 
-##### Examples for using in templates coming soon...
+
+   **Simple HTML Template**
+    This example uses abstract controls 'username', 'passwordOne', 'passwordTwo', and 'passwordGroup'
+    
+    <form>
+    
+		<label>Username</label>
+		<input 
+			class="form-control" placeholder="Username"
+		    [class.error]='username._touched && username.invalid'
+		    [formControl]='username'
+		 >
+		 <div *ngIf='username._touched && username.invalid'>
+		    <div *ngFor='let validator of validators'>
+			    <p class='error-msg'
+				    *ngIf='username.hasError(validator.name)'
+			    >
+				    {{validator.message}}
+			    </p>
+		    </div>
+		</div>
+		
+		<label>Password</label>
+		<input 
+			class="form-control" placeholder="Password"
+		    [class.error]='passwordOne._touched && passwordOne.invalid'
+		    [formControl]='passwordOne'
+		 >
+		 <div *ngIf='passwordOne._touched && passwordOne.invalid'>
+		    <div *ngFor='let validator of validators'>
+			    <p class='error-msg'
+				    *ngIf='passwordOne.hasError(validator.name)'
+			    >
+				    {{validator.message}}
+			    </p>
+		    </div>
+		</div>
+		
+		<label>Confirm Password</label>
+		<input 
+			class="form-control" placeholder="Confirm"
+		    [class.error]='passwordTwo._touched && passwordTwo.invalid'
+		    [formControl]='passwordTwo'
+		 >
+		 <div *ngIf='passwordTwo._touched && passwordTwo.invalid'>
+		    <div *ngFor='let validator of validators'>
+			    <p class='error-msg'
+				    *ngIf='passwordTwo.hasError(validator.name)'
+			    >
+				    {{validator.message}}
+			    </p>
+		    </div>
+		</div>
+    <div *ngIf='passwordOne._touched && passwordTwo._touched && passwordGroup.invalid'>
+				<div *ngFor='let validator of validators'>
+			    <p class='error-msg'
+				    *ngIf='passwordGroup.hasError(validator.name)'
+			    >
+				    {{validator.message}}
+			    </p>
+		    </div>
+		</div>
+		
+	</form>	    
+
+
+#####Example for using the controls array in HTML coming soon...
 
 ### License
 
