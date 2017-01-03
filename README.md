@@ -40,7 +40,9 @@ export class <yourAppModule> {
 
 **Default Validators and Configuration**
 
-The validation service relies on a JSON configuration file consisting of form control names and their associated validation properties.  A sample configuration file can be found [here](https://github.com/uspto/ng2-validations/blob/master/src/Samples/example-config.json) and ships with the service. The dynamic validations also require validator function definitions which can be found [here](https://github.com/uspto/ng2-validations/blob/master/src/Samples/sample-validation-definitions.ts). To use the default configuration and definitions in your application simply call the useDefaultConfig method in your app.module ngOnInit method.
+The validation service relies on a JSON configuration file consisting of form control names and their associated validation properties.  A sample configuration file can be found [here](https://github.com/uspto/ng2-validations/blob/master/src/Samples/example-config.json) and ships with the service. The dynamic validations also require validator function definitions which can be found [here](https://github.com/uspto/ng2-validations/blob/master/src/Samples/sample-validation-definitions.ts). To use the default configuration and definitions in your application simply call the useDefaultConfig method in your app.module ngOnInit method. 
+
+** **NOTE** ** Currently the default configuration and definitions are for demonstration purposes only. As we are still actively developing and testing this service, most common validations will be added to the configuation and definitions files soon. Stay tuned...
 
 ```javascript
 // in app.module.ts
