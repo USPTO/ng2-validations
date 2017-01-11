@@ -1,51 +1,51 @@
 export declare const initialValidationConfig: {
-    "username": {
-        "validators": string[];
-        "conditions": any[];
-        "required": boolean;
+    'username': {
+        'validators': string[];
+        'conditions': any[];
+        'required': boolean;
     };
-    "email": {
-        "validators": string[];
-        "conditions": {
-            "control": string;
-            "values": string[];
-            "tests": string[];
+    'email': {
+        'validators': string[];
+        'conditions': {
+            'control': string;
+            'values': string[];
+            'tests': string[];
         }[];
-        "required": boolean;
+        'required': boolean;
     };
-    "password": {
-        "validators": string[];
-        "conditions": any[];
-        "required": boolean;
+    'password': {
+        'validators': string[];
+        'conditions': any[];
+        'required': boolean;
     };
-    "country": {
-        "validators": any[];
-        "conditions": {
-            "control": string;
-            "values": string;
-            "tests": any[];
-            "required": boolean;
+    'country': {
+        'validators': any[];
+        'conditions': {
+            'control': string;
+            'values': string;
+            'tests': any[];
+            'required': boolean;
         }[];
-        "required": boolean;
+        'required': boolean;
     };
-    "state": {
-        "validators": any[];
-        "conditions": any[];
-        "required": boolean;
+    'state': {
+        'validators': any[];
+        'conditions': any[];
+        'required': boolean;
     };
-    "datePicker": {
-        "validators": string[];
-        "conditions": any[];
-        "required": boolean;
+    'datePicker': {
+        'validators': string[];
+        'conditions': any[];
+        'required': boolean;
     };
-    "dateFrom": {
-        "validators": string[];
-        "conditions": any[];
-        "required": boolean;
+    'dateFrom': {
+        'validators': string[];
+        'conditions': any[];
+        'required': boolean;
     };
-    "dateTo": {
-        "validators": string[];
-        "conditions": any[];
-        "required": boolean;
+    'dateTo': {
+        'validators': string[];
+        'conditions': any[];
+        'required': boolean;
     };
 };

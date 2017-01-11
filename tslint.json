@@ -5,18 +5,17 @@
       true,
       "check-space"
     ],
-    "curly": true,
+    // "curly": true,
     "eofline": true,
     "forin": true,
     "indent": [
-      true,
-      "spaces"
+      true
     ],
     "label-position": true,
     "label-undefined": true,
     "max-line-length": [
       true,
-      140
+      200
     ],
     "member-access": false,
     "member-ordering": [

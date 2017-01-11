@@ -1,49 +1,49 @@
 // Initial configuration file for validators
 // Only written as an object so require() doesn't throw an error whie transpiling
 export const initialValidationConfig = {
-	"username": {
-		"validators":["hasLetters","usernameLength"],
-		"conditions":[],
-		"required":true
+	'username': {
+		'validators': ['hasLetters', 'usernameLength'],
+		'conditions': [],
+		'required': true
 	},
-	"email": {
-		"validators":["validEmail"],
-		"conditions":[
-			{"control":"username","values":["hi","bye"],"tests":["hasSpecialChars"]}
+	'email': {
+		'validators': ['validEmail'],
+		'conditions': [
+			{'control': 'username', 'values': ['hi', 'bye'], 'tests': ['hasSpecialChars']}
 		],
-		"required":true
+		'required': true
 	},
-	"password": {
-		"validators":["hasLowerCase","hasUpperCase","hasSpecialChars","passwordLength","hasNums"],
-		"conditions":[],
-		"required":true
+	'password': {
+		'validators': ['hasLowerCase', 'hasUpperCase', 'hasSpecialChars', 'passwordLength', 'hasNums'],
+		'conditions': [],
+		'required': true
 	},
-	"country":{
-		"validators":[],
-		"conditions":[
-			{"control":"state","values":"US","tests":[],"required":true},
-			{"control":"state","values":"CA","tests":[],"required":true}
+	'country': {
+		'validators': [],
+		'conditions': [
+			{'control': 'state', 'values': 'US', 'tests': [], 'required': true},
+			{'control': 'state', 'values': 'CA', 'tests': [], 'required': true}
 		],
-		"required":true
+		'required': true
 	},
-	"state":{
-		"validators":[],
-		"conditions":[],
-		"required":false
+	'state': {
+		'validators': [],
+		'conditions': [],
+		'required': false
 	},
-	"datePicker":{
-		"validators":["datePickerValid"],
-		"conditions":[],
-		"required":false
+	'datePicker': {
+		'validators': ['datePickerValid'],
+		'conditions': [],
+		'required': false
 	},
-	"dateFrom":{
-		"validators":["invalidDate"],
-		"conditions":[],
-		"required": false
+	'dateFrom': {
+		'validators': ['invalidDate'],
+		'conditions': [],
+		'required': false
 	},
-	"dateTo":{
-		"validators":["invalidDate"],
-		"conditions":[],
-		"required": false
+	'dateTo': {
+		'validators': ['invalidDate'],
+		'conditions': [],
+		'required': false
 	}
-}
+};
