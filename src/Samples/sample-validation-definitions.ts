@@ -9,7 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export const sampleValidationDefinitions = {
 	hasLetters: {
 		hasLetters: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null || !c.value.length) return null;
 			let emailValid = /[a-z]/gi;
 			return emailValid.test(c.value) ? null : { hasLetters: false };
 		},
@@ -17,14 +17,14 @@ export const sampleValidationDefinitions = {
 	},
 	usernameLength: {
 		usernameLength: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null  || !c.value.length) return null;
 			return c.value.length >= 6 ? null : { usernameLength: false };
 		},
 		message: 'Must be at least 6 characters'
 	},
 	validEmail: {
 		validEmail: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null  || !c.value.length) return null;
 			let emailExp = /^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.+[a-zA-Z0–9_.]+$/gi;
 			return emailExp.test(c.value) ? null : { validEmail: false };
 		},
@@ -32,14 +32,14 @@ export const sampleValidationDefinitions = {
 	},
 	passwordLength: {
 		passwordLength: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null  || !c.value.length) return null;
 			return c.value.length >= 10 ? null : { passwordLength: false };
 		},
 		message: 'Must be at least 10 characters'
 	},
 	hasSpecialChars: {
 		hasSpecialChars: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null   || !c.value.length) return null;
 			let specialChars = /[^a-z0-9]/gi;
 			return specialChars.test(c.value) ? null : { hasSpecialChars: false };
 		},
@@ -47,7 +47,7 @@ export const sampleValidationDefinitions = {
 	},
 	noSpecialChars: {
 		noSpecialChars: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null   || !c.value.length) return null;
 			let specialChars = /[^a-z0-9]/gi;
 			return specialChars.test(c.value) ? { noSpecialChars: false } : null;
 		},
@@ -55,7 +55,7 @@ export const sampleValidationDefinitions = {
 	},
 	hasNums: {
 			hasNums: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null   || !c.value.length) return null;
 			let digits = /[0-9]/gi;
 			return digits.test(c.value) ? null : { hasNums: false };
 		},
@@ -63,7 +63,7 @@ export const sampleValidationDefinitions = {
 	},
 	hasUpperCase: {
 		hasUpperCase: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null   || !c.value.length) return null;
 			let upper = /[A-Z]/g;
 			return upper.test(c.value) ? null : { hasUpperCase: false };
 		},
@@ -71,7 +71,7 @@ export const sampleValidationDefinitions = {
 	},
 	hasLowerCase: {
 		hasLowerCase: function(c: FormControl) {
-			if (c.value === null) return null;
+			if (c.value === null   || !c.value.length) return null;
 			let lower = /[a-z]/g;
 			return lower.test(c.value) ? null : { hasLowerCase: false };
 		},
