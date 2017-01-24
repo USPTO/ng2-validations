@@ -63,8 +63,10 @@ export class NgValidations {
 		if (this.validators[controlName]) {
 			const vals = this.validators[controlName].validators.map(val => this.validationDefinitions[val][val]);
 			const required = this.validators[controlName].required;
-			control.setValidators(this.setValidators(vals, required));
-			control.updateValueAndValidity();
+			if (control.value.length || required) {
+				control.setValidators(this.setValidators(vals, required));
+				control.updateValueAndValidity();
+			}
 		}
 	}
 
@@ -109,13 +111,14 @@ export class NgValidations {
 				conditionalValidators = conditionsToValidate.map(c => c.tests.map(test => this.validationDefinitions[test][test])).reduce((a, b) => a.concat(b), []);
 
 				// Update form control with new validations 
-				currentControl.setValidators([
-					...conditionalValidators,
-					...staticValidators,
-					...this.checkIfRequired(controlRequired, staticRequired)
-				]);
-				currentControl.updateValueAndValidity();
-
+				if (currentControl.value.lenght || this.checkIfRequired(controlRequired, staticRequired).length) {
+					currentControl.setValidators([
+						...conditionalValidators,
+						...staticValidators,
+						...this.checkIfRequired(controlRequired, staticRequired)
+					]);
+					currentControl.updateValueAndValidity();
+				}
 			});
 		});
 	}

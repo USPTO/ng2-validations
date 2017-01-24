@@ -27,7 +27,7 @@ export const initialValidationConfig = {
 		'required': true
 	},
 	'state': {
-		'validators': [],
+		'validators': ['hasLetters'],
 		'conditions': [],
 		'required': false
 	},

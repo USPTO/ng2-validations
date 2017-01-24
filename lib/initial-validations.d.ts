@@ -29,7 +29,7 @@ export declare const initialValidationConfig: {
         'required': boolean;
     };
     'state': {
-        'validators': any[];
+        'validators': string[];
         'conditions': any[];
         'required': boolean;
     };
