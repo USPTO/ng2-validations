@@ -118,7 +118,10 @@ export class NgValidations {
 						...this.checkIfRequired(controlRequired, staticRequired)
 					]);
 					currentControl.updateValueAndValidity();
+				} else {
+					currentControl.setValidators([]);
 				}
+				currentControl.updateValueAndValidity();
 			});
 		});
 	}
