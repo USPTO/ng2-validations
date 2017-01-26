@@ -11,7 +11,7 @@
     "form validation",
     "validations"
   ],
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "build": "rm -rf lib && tsc -p src"
   },
