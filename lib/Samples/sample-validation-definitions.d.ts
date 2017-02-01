@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
-export declare const sampleValidationDefinitions: {
+export declare const validationDefinitions: {
     hasLetters: {
         hasLetters: (c: FormControl) => {
             hasLetters: boolean;
@@ -63,6 +63,18 @@ export declare const sampleValidationDefinitions: {
     invalidDate: {
         invalidDate: (c: FormControl) => {
             invalidDate: boolean;
+        };
+        message: string;
+    };
+    dateFormat: {
+        dateFormat: (c: FormControl) => {
+            dateFprmat: boolean;
+        };
+        message: string;
+    };
+    noFutureDate: {
+        noFutureDate: (c: FormControl) => {
+            noFutureDate: boolean;
         };
         message: string;
     };

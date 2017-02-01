@@ -6,7 +6,7 @@ import { HttpService } from './http-services';
 // import { validationDefinitions as defs } from './initial-validation-definitions';
 
 import { initialValidationConfig }  from './initial-validations';
-import { sampleValidationDefinitions } from './Samples/sample-validation-definitions';
+import { validationDefinitions } from './Samples/sample-validation-definitions';
 
 @Injectable()
 export class NgValidations {
@@ -109,8 +109,8 @@ export class NgValidations {
 				conditionalValidators = conditionsToValidate.map(c => c.tests.map(test => this.validationDefinitions[test][test])).reduce((a, b) => a.concat(b), []);
 
 				// Update form control with new validations
-				// <==== If curentControl is not empty or is required 
-				if (currentControl.value.lenght || this.checkIfRequired(controlRequired, staticRequired).length) {
+				// <==== If curentControl is not empty or is required
+				if (currentControl.value.length || this.checkIfRequired(controlRequired, staticRequired).length) {
 					currentControl.setValidators([
 						...conditionalValidators,
 						...staticValidators,
@@ -171,7 +171,7 @@ export class NgValidations {
 	// Use default configurations and definitions
 	useDefaultConfig() {
 		this.setValidatorConfiguration(initialValidationConfig);
-		this.setValidatorDefinitions(sampleValidationDefinitions);
+		this.setValidatorDefinitions(validationDefinitions);
 	}
 
 	// ***Call these methods to set validation configuration or definitions from an outside resource***

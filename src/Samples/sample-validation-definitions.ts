@@ -1,15 +1,16 @@
 import { FormControl, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
 
 // Sample validations. This was used in the constructor as an example.
 
 // ======= Test functions for validation =======
-// **Important** 
+// **Important**
 // Angular provides the name of the error on its invalid form controls. This structure makes it easy to loop
-// through the controls and display their associated error messages in the html template  
-export const sampleValidationDefinitions = {
+// through the controls and display their associated error messages in the html template
+export const validationDefinitions = {
 	hasLetters: {
 		hasLetters: function(c: FormControl) {
-			if (c.value === null || !c.value.length) return null;
+			if (!c.value) return null;
 			let emailValid = /[a-z]/gi;
 			return emailValid.test(c.value) ? null : { hasLetters: false };
 		},
@@ -17,14 +18,14 @@ export const sampleValidationDefinitions = {
 	},
 	usernameLength: {
 		usernameLength: function(c: FormControl) {
-			if (c.value === null  || !c.value.length) return null;
+			if (!c.value) return null;
 			return c.value.length >= 6 ? null : { usernameLength: false };
 		},
 		message: 'Must be at least 6 characters'
 	},
 	validEmail: {
 		validEmail: function(c: FormControl) {
-			if (c.value === null  || !c.value.length) return null;
+			if (!c.value) return null;
 			let emailExp = /^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.+[a-zA-Z0–9_.]+$/gi;
 			return emailExp.test(c.value) ? null : { validEmail: false };
 		},
@@ -32,14 +33,14 @@ export const sampleValidationDefinitions = {
 	},
 	passwordLength: {
 		passwordLength: function(c: FormControl) {
-			if (c.value === null  || !c.value.length) return null;
+			if (!c.value) return null;
 			return c.value.length >= 10 ? null : { passwordLength: false };
 		},
 		message: 'Must be at least 10 characters'
 	},
 	hasSpecialChars: {
 		hasSpecialChars: function(c: FormControl) {
-			if (c.value === null   || !c.value.length) return null;
+			if (!c.value) return null;
 			let specialChars = /[^a-z0-9]/gi;
 			return specialChars.test(c.value) ? null : { hasSpecialChars: false };
 		},
@@ -47,15 +48,15 @@ export const sampleValidationDefinitions = {
 	},
 	noSpecialChars: {
 		noSpecialChars: function(c: FormControl) {
-			if (c.value === null   || !c.value.length) return null;
-			let specialChars = /[^a-z0-9]/gi;
+			if (!c.value) return null;
+			let specialChars = /[^a-z0-9.-]/gi;
 			return specialChars.test(c.value) ? { noSpecialChars: false } : null;
 		},
 		message: 'Cannot contain any special characters'
 	},
 	hasNums: {
 			hasNums: function(c: FormControl) {
-			if (c.value === null   || !c.value.length) return null;
+			if (!c.value) return null;
 			let digits = /[0-9]/gi;
 			return digits.test(c.value) ? null : { hasNums: false };
 		},
@@ -63,7 +64,7 @@ export const sampleValidationDefinitions = {
 	},
 	hasUpperCase: {
 		hasUpperCase: function(c: FormControl) {
-			if (c.value === null   || !c.value.length) return null;
+			if (!c.value) return null;
 			let upper = /[A-Z]/g;
 			return upper.test(c.value) ? null : { hasUpperCase: false };
 		},
@@ -71,7 +72,7 @@ export const sampleValidationDefinitions = {
 	},
 	hasLowerCase: {
 		hasLowerCase: function(c: FormControl) {
-			if (c.value === null   || !c.value.length) return null;
+			if (!c.value) return null;
 			let lower = /[a-z]/g;
 			return lower.test(c.value) ? null : { hasLowerCase: false };
 		},
@@ -84,23 +85,46 @@ export const sampleValidationDefinitions = {
 				return null;
 			}
 			let fromDate, toDate;
-				fromDate = new Date((<any>values).controls['dateFrom']._value).getTime();
-				toDate = new Date((<any>values).controls['dateTo']._value).getTime();
+				fromDate = moment((<any>values).controls['dateFrom']._value).unix();
+				toDate = moment((<any>values).controls['dateTo']._value).unix();
 				if (toDate < fromDate) {
 					return { datePickerValid: false};
 				}
 				return null;
 		},
-		message: '"Date To" must be equal to or later than "Date From"'
+		message: '"From Date" must be equal to or less than "To Date"'
 	},
 	invalidDate: {
 		invalidDate: function(c: FormControl) {
-			if (c.value === null || !c.value.length) return null;
-			if (isNaN(new Date(c.value).getTime()))
-				return {invalidDate: false};
+			if (!c.value) return null;
+			if (!moment(c.value).isValid()) {
+				return { invalidDate: false };
+			}
 			return null;
 		},
 		message: 'Invalid date'
+	},
+	dateFormat: {
+		dateFormat: function(c: FormControl) {
+			if (!c.value) return null;
+			if (!moment(c.value, 'MM-DD-YYYY').isValid()) {
+				return { dateFprmat: false };
+			}
+			return null;
+		},
+		message: 'Date format must be MMDDYYYY'
+	},
+	noFutureDate: {
+		noFutureDate : function(c: FormControl) {
+			if (!c.value || !moment(c.value).isValid()) return null;
+			let controlDate = moment(c.value).unix();
+			let now = moment().unix();
+			if (controlDate > now) {
+				return { noFutureDate: false };
+			}
+			return null;
+		},
+		message: 'Dates cannot be in the future'
 	}
 };
 
@@ -169,12 +193,5 @@ You can also define the validators as an object and refer to it in the validatio
 				return { datePickerValid: false};
 			}
 			return null;
-	},
-	invalidDate: function(c: FormControl) {
-		console.log('date', c);
-		if (c.value === null || !c.value.length) return null;
-		if (isNaN(new Date(c.value).getTime()))
-			return {invalidDate: false};
-		return null;
 	}
 };
