@@ -16,6 +16,11 @@
 		"conditions":[],
 		"required":true
 	},
+	"phone": {
+		"validators":[],
+		"conditions":[],
+		"required":true
+	},
 	"country":{
 		"validators":[],
 		"conditions":[
@@ -35,12 +40,12 @@
 		"required":false
 	},
 	"dateFrom":{
-		"validators":["invalidDate"],
+		"validators":["invalidDate","dateFormat"],
 		"conditions":[],
 		"required": false
 	},
 	"dateTo":{
-		"validators":["invalidDate"],
+		"validators":["invalidDate","dateFormat"],
 		"conditions":[],
 		"required": false
 	}

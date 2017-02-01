@@ -78,4 +78,10 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
+    validPhoneNumber: {
+        validPhoneNumber: (c: FormControl) => {
+            validPhoneNumber: boolean;
+        };
+        message: string;
+    };
 };

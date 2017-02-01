@@ -1,5 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
+// import libphonenumber from 'google-libphonenumber';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 
 // Sample validations. This was used in the constructor as an example.
 
@@ -125,6 +127,18 @@ export const validationDefinitions = {
 			return null;
 		},
 		message: 'Dates cannot be in the future'
+	},
+	validPhoneNumber: {
+		validPhoneNumber: function(c: FormControl) {
+			if (!c.value) return null;
+			const phoneUtil = PhoneNumberUtil.getInstance();
+			if (!phoneUtil.isValid(phoneUtil.parse(c.value))) {
+				return { validPhoneNumber: false};
+			}
+			return null;
+		},
+		message: 'Please enter a valid phone number'
+
 	}
 };
 
