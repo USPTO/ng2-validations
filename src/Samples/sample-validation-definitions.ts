@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
-import libphonenumber = require('google-libphonenumber');
-const PhoneNumberUtil = libphonenumber.PhoneNumberUtil;
+import { PhoneNumberUtil } from 'google-libphonenumber';
+
 
 // Sample validations. This was used in the constructor as an example.
 
