@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
-// import libphonenumber from 'google-libphonenumber';
-import { PhoneNumberUtil } from 'google-libphonenumber';
+import libphonenumber = require('google-libphonenumber');
+const PhoneNumberUtil = libphonenumber.PhoneNumberUtil;
 
 // Sample validations. This was used in the constructor as an example.
 
@@ -132,7 +132,7 @@ export const validationDefinitions = {
 		validPhoneNumber: function(c: FormControl) {
 			if (!c.value) return null;
 			const phoneUtil = PhoneNumberUtil.getInstance();
-			if (!phoneUtil.isValid(phoneUtil.parse(c.value))) {
+			if (!phoneUtil.isValidNumber(phoneUtil.parse(c.value, 'US'))) {
 				return { validPhoneNumber: false};
 			}
 			return null;
