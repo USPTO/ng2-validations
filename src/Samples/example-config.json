@@ -24,8 +24,7 @@
 	"country":{
 		"validators":[],
 		"conditions":[
-			{"control":"state","values":"US","tests":[],"required":true,"index":0},
-			{"control":"state","values":"CA","tests":[],"required":true,"index":1}
+			{"control":"state","values":"US","tests":[],"required":true,"index":0}
 		],
 		"required":true
 	},
