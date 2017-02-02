@@ -133,8 +133,9 @@ export const validationDefinitions = {
 			if (!c.value) return null;
 			const phoneUtil = PhoneNumberUtil.getInstance();
 			try {
-				phoneUtil.isValidNumber(phoneUtil.parse(c.value, 'US'));
-				return null;
+				if (!phoneUtil.isValidNumber(phoneUtil.parse(c.value, 'US'))) {
+					return { validPhoneNumber: false};
+				}
 			} catch (error) {
 				return { validPhoneNumber: false};
 			}
