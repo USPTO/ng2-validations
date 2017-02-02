@@ -48,5 +48,10 @@
 		"validators":["invalidDate","dateFormat"],
 		"conditions":[],
 		"required": false
+	},
+	"phoneNumber": {
+		"validators":["validPhoneNumber"],
+		"conditions":[],
+		"required": true
 	}
 }
