@@ -14,7 +14,7 @@
         "allowSyntheticDefaultImports": true
     },
     "types": [
-      "google-libphonehumber"
+      "google-libphonenumber"
     ], 
     "exclude": [
         "../node_modules"

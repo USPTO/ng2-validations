@@ -36,14 +36,19 @@ export const initialValidationConfig = {
 		'conditions': [],
 		'required': false
 	},
-	'dateFrom': {
-		'validators': ['invalidDate'],
+	'dateFrom':{
+		'validators': ['invalidDate', 'dateFormat'],
 		'conditions': [],
 		'required': false
 	},
-	'dateTo': {
-		'validators': ['invalidDate'],
+	'dateTo':{
+		'validators': ['invalidDate', 'dateFormat'],
 		'conditions': [],
 		'required': false
+	},
+	'phoneNumber': {
+		'validators': ['validPhoneNumber'],
+		'conditions': [],
+		'required': true
 	}
 };

@@ -48,4 +48,9 @@ export declare const initialValidationConfig: {
         'conditions': any[];
         'required': boolean;
     };
+    'phoneNumber': {
+        'validators': string[];
+        'conditions': any[];
+        'required': boolean;
+    };
 };
