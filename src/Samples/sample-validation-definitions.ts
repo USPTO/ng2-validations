@@ -209,3 +209,18 @@ You can also define the validators as an object and refer to it in the validatio
 			return null;
 	}
 };
+
+/*
+	validPhoneNumber: {
+		validPhoneNumber: function(c: FormControl) {
+			if (!c.value) return null;
+			const phoneUtil = PhoneNumberUtil.getInstance();
+			if (!phoneUtil.isValidNumber(phoneUtil.parse(c.value, 'US'))) {
+				return { validPhoneNumber: false};
+			}
+			return null;
+		},
+		message: 'Please enter a valid phone number'
+
+	}
+	*/

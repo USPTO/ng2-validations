@@ -16,11 +16,6 @@
 		"conditions":[],
 		"required":true
 	},
-	"phone": {
-		"validators":[],
-		"conditions":[],
-		"required":true
-	},
 	"country":{
 		"validators":[],
 		"conditions":[
@@ -49,7 +44,7 @@
 		"required": false
 	},
 	"phoneNumber": {
-		"validators":["validPhoneNumber"],
+		"validators":[],
 		"conditions":[],
 		"required": true
 	}

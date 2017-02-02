@@ -17,7 +17,6 @@
       "google-libphonehumber"
     ], 
     "exclude": [
-        "../node_modules",
-        "./Samples"
+        "../node_modules"
     ]
 }
