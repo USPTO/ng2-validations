@@ -152,8 +152,9 @@ export const validationDefinitions = {
 	simpleValidPhoneNumber: {
 		simpleValidPhoneNumber: function(c: FormControl) {
 			if (!c.value) return null;
-			if (c.value.length < 10 || /[^a-z0-9.-+]/gi.test(c.value)) {
-				return { simpleValidPhoneNumber: false}
+			let specialChars = /[^a-z0-9.-]/gi;
+			if (c.value.length < 10 || c.value.length > 18 || specialChars.test(c.value)) {
+				return { simpleValidPhoneNumber: false };
 			}
 			return null;
 		}
