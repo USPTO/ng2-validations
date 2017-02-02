@@ -68,7 +68,7 @@ export declare const validationDefinitions: {
     };
     dateFormat: {
         dateFormat: (c: FormControl) => {
-            dateFprmat: boolean;
+            dateFormat: boolean;
         };
         message: string;
     };
@@ -78,10 +78,15 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
-    validPhoneNumber: {
-        validPhoneNumber: (c: FormControl) => {
-            validPhoneNumber: boolean;
+    validPhoneNumberInternational: {
+        validPhoneNumberInternational: (values: FormGroup) => {
+            validPhoneNumberInternational: boolean;
         };
         message: string;
+    };
+    simpleValidPhoneNumber: {
+        simpleValidPhoneNumber: (c: FormControl) => {
+            simpleValidPhoneNumber: boolean;
+        };
     };
 };

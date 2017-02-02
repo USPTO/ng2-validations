@@ -109,8 +109,8 @@ export const validationDefinitions = {
 	dateFormat: {
 		dateFormat: function(c: FormControl) {
 			if (!c.value) return null;
-			if (!moment(c.value, 'MM-DD-YYYY').isValid()) {
-				return { dateFprmat: false };
+			if (!moment(c.value, 'MM-DD-YYYY').isValid() && !moment(c.value, 'YYYY-MM-DD').isValid()) {
+				return { dateFormat: false };
 			}
 			return null;
 		},
@@ -128,21 +128,35 @@ export const validationDefinitions = {
 		},
 		message: 'Dates cannot be in the future'
 	},
-	validPhoneNumber: {
-		validPhoneNumber: function(c: FormControl) {
-			if (!c.value) return null;
+	validPhoneNumberInternational: {
+		validPhoneNumberInternational: function(values: FormGroup) {
+			if (!values || !values.controls['phoneNumber'] || !values.controls['countryCode']) {
+				console.warn('Validator "validPhoneNumberInternational" requires "phoneGroup" FormGroup with controls: "phoneNumber" and "countryCode". Phone validation being ignored.');
+				return null;
+			}
+			let phone = values.controls['phoneNumber'].value,
+				code = values.controls['countryCode'].value;
+			if (!phone || !code) return null;
 			const phoneUtil = PhoneNumberUtil.getInstance();
 			try {
-				if (!phoneUtil.isValidNumber(phoneUtil.parse(c.value, 'US'))) {
-					return { validPhoneNumber: false};
+				if (!phoneUtil.isValidNumber(phoneUtil.parse(phone, code))) {
+					return { validPhoneNumberInternational: false};
 				}
 			} catch (error) {
-				return { validPhoneNumber: false};
+				return { validPhoneNumberInternational: false};
 			}
 			return null;
 		},
 		message: 'Please enter a valid phone number'
-
+	},
+	simpleValidPhoneNumber: {
+		simpleValidPhoneNumber: function(c: FormControl) {
+			if (!c.value) return null;
+			if (c.value.length < 10 || /[^a-z0-9.-+]/gi.test(c.value)) {
+				return { simpleValidPhoneNumber: false}
+			}
+			return null;
+		}
 	}
 };
 

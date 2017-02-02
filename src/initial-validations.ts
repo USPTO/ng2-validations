@@ -22,7 +22,6 @@ export const initialValidationConfig = {
 		'validators': [],
 		'conditions': [
 			{'control': 'state', 'values': 'US', 'tests': [], 'required': true},
-			{'control': 'state', 'values': 'CA', 'tests': [], 'required': true}
 		],
 		'required': true
 	},
@@ -47,7 +46,7 @@ export const initialValidationConfig = {
 		'required': false
 	},
 	'phoneNumber': {
-		'validators': ['validPhoneNumber'],
+		'validators': ['validPhoneNumberInternational'],
 		'conditions': [],
 		'required': true
 	}
