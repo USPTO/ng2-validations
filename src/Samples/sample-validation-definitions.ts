@@ -132,7 +132,10 @@ export const validationDefinitions = {
 		validPhoneNumber: function(c: FormControl) {
 			if (!c.value) return null;
 			const phoneUtil = PhoneNumberUtil.getInstance();
-			if (!phoneUtil.isValidNumber(phoneUtil.parse(c.value, 'US'))) {
+			try {
+				phoneUtil.isValidNumber(phoneUtil.parse(c.value, 'US'));
+				return null;
+			} catch (error) {
 				return { validPhoneNumber: false};
 			}
 			return null;
