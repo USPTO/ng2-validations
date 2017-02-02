@@ -10,8 +10,12 @@
         "noImplicitAny": false,
         "outDir": "../lib",
         "suppressImplicitAnyIndexErrors": true,
-        "declaration": true
-    }, 
+        "declaration": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "types": [
+      "google-libphonehumber"
+    ], 
     "exclude": [
         "../node_modules",
         "./Samples"
