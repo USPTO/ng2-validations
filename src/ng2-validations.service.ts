@@ -73,7 +73,7 @@ export class NgValidations {
 		// const valControls = this.validators[control].validators || [];
 
 		// Identify conditional validators for control
-		const conditions: Array<any> = this.validators[control].conditions;
+		const conditions = this.validators[control].conditions;
 
 		// Subscribe to form control value changes
 		const changes = form.controls[control].valueChanges;
@@ -84,6 +84,10 @@ export class NgValidations {
 			// Check each condition on value change
 			conditions.forEach((condition, index) => {
 				const currentControl = form.controls[condition.control];
+				if (conditions.findIndex((c) => {
+					return c.control === currentControl;
+				}) !== index) return;
+
 				const staticValidators =  this.validators[condition.control].validators.map(val => this.validationDefinitions[val][val]);
 				const staticRequired = this.validators[condition.control].required || false;
 				let conditionalValidators = [];
