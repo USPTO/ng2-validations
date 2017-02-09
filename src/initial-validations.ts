@@ -35,12 +35,12 @@ export const initialValidationConfig = {
 		'conditions': [],
 		'required': false
 	},
-	'dateFrom':{
+	'dateFrom': {
 		'validators': ['invalidDate', 'dateFormat'],
 		'conditions': [],
 		'required': false
 	},
-	'dateTo':{
+	'dateTo': {
 		'validators': ['invalidDate', 'dateFormat'],
 		'conditions': [],
 		'required': false

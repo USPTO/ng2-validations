@@ -15,10 +15,9 @@ export class NgValidations {
 	public validationDefinitions= {}; // <= Object to hold actual validation functions
 
 	constructor(private http: HttpService, private fb: FormBuilder) {}
-
 	/*
-	Method called to bind validations to a form. Simply pass in the form and all validations will be bound, inluding conditionals. 
-	This methods returns a object with two keys: 
+	Method called to bind validations to a form. Simply pass in the form and all validations will be bound, inluding conditionals.
+	This methods returns a object with two keys:
 		1) controls: An array of controls you can later loop through to keep track of each control state
 		2) messages: An array of validators with thier messages to use in the html template with *ngFor
 			...loop through this to dynamically display error messages on unmet validations
@@ -31,7 +30,7 @@ export class NgValidations {
 		const formControls = form.controls;
 		let controls = [];
 		Object.keys(formControls).forEach(control => {
-			controls.push({ name: control, controller: form.controls[control]}); // <=== Only for display purposes =====
+			controls.push({ name: control, controller: form.controls[control]});
 			// Verify control exists on validator service and has conditions
 			if (this.validators[control] && this.validators[control].conditions.length) {
 				this.bindStaticValidations(formControls[control], control);
@@ -50,7 +49,6 @@ export class NgValidations {
 				console.warn(`Control "${control}" does not exist in confiration data and will not be bound to any validations.\nPlease check the JSON configuration data for a list of available controls.`);
 			}
 		});
-
 		// Return data to loop through in html template for error messages...
 		return {
 			messages: this.createValidationMessageArrray(this.validationDefinitions),
@@ -69,25 +67,17 @@ export class NgValidations {
 	}
 
 	handleConditionalValidations(control: string, form: FormGroup) {
-		// Identify non-conditional validators for control
-		// const valControls = this.validators[control].validators || [];
-
 		// Identify conditional validators for control
 		const conditions = this.validators[control].conditions;
 
 		// Subscribe to form control value changes
 		const changes = form.controls[control].valueChanges;
-		let conditionsToValidate: Array<any> = [];
-
 		// Execute function on any formControl value change...will update validations if match
 		changes.subscribe(value => {
+			let conditionsToValidate: Array<any> = [];
 			// Check each condition on value change
 			conditions.forEach((condition, index) => {
 				const currentControl = form.controls[condition.control];
-				if (conditions.findIndex((c) => {
-					return c.control === currentControl;
-				}) !== index) return;
-
 				const staticValidators =  this.validators[condition.control].validators.map(val => this.validationDefinitions[val][val]);
 				const staticRequired = this.validators[condition.control].required || false;
 				let conditionalValidators = [];
@@ -95,7 +85,6 @@ export class NgValidations {
 				// If controls new value matches condition value
 				if (currentControl && condition.values.indexOf(value) >= 0) {
 					// Add condition to conditionsToValidate
-					console.log('Condition Found!');
 					conditionsToValidate = [...conditionsToValidate, conditions[index]];
 				}
 				// If new control value does not match & is in conditionsToValidate array
