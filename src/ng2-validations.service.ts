@@ -11,8 +11,8 @@ import { validationDefinitions } from './Samples/sample-validation-definitions';
 @Injectable()
 export class NgValidations {
 
-	public validators = {}; // <+ Object to hold validator configuration. Can be changed with setValidationsWithService() or setValidatorConfiguration()
-	public validationDefinitions= {}; // <= Object to hold actual validation functions
+	private validators = {}; // <+ Object to hold validator configuration. Can be changed with setValidationsWithService() or setValidatorConfiguration()
+	private validationDefinitions= {}; // <= Object to hold actual validation functions
 
 	constructor(private http: HttpService, private fb: FormBuilder) {}
 	/*
@@ -82,6 +82,7 @@ export class NgValidations {
 				const staticRequired = this.validators[condition.control].required || false;
 				let conditionalValidators = [];
 				let controlRequired = false;
+				let requiredValidators = [];
 				// If controls new value matches condition value
 				if (currentControl && condition.values.indexOf(value) >= 0) {
 					// Add condition to conditionsToValidate
@@ -100,16 +101,16 @@ export class NgValidations {
 
 				// Map conditionalValidators to validation definitions
 				conditionalValidators = conditionsToValidate.map(c => c.tests.map(test => this.validationDefinitions[test][test])).reduce((a, b) => a.concat(b), []);
-
+				requiredValidators = this.checkIfRequired(controlRequired, staticRequired);
 				// Update form control with new validations
 				// <==== If curentControl is not empty or is required
-				if (currentControl.value.length || this.checkIfRequired(controlRequired, staticRequired).length) {
+					// Need Null check to avoid error on finding properties of null values
+				if ((currentControl.value === null || currentControl.value.length) || requiredValidators.length) {
 					currentControl.setValidators([
 						...conditionalValidators,
 						...staticValidators,
-						...this.checkIfRequired(controlRequired, staticRequired)
+						...requiredValidators
 					]);
-					currentControl.updateValueAndValidity();
 				// If currentControl is empty and not required reset validators to null
 				} else {
 					currentControl.setValidators([]);
@@ -152,7 +153,7 @@ export class NgValidations {
 		return conditionalReq ? [Validators.required] : [];
 	}
 
-	// ***** Methods to set configration and definitions 
+	// ***** Methods to set configration and definitions
 	setValidatorDefinitions(definitiions) {
 		this.validationDefinitions = definitiions;
 	}
