@@ -3,8 +3,8 @@ import { HttpService } from './http-services';
 export declare class NgValidations {
     private http;
     private fb;
-    validators: {};
-    validationDefinitions: {};
+    private validators;
+    private validationDefinitions;
     constructor(http: HttpService, fb: FormBuilder);
     bindFormValidations(form: any): {
         messages: {
@@ -35,5 +35,5 @@ export declare class NgValidations {
     setValidatorConfiguration(config: any): void;
     useDefaultConfig(): void;
     setConfigurationFromSource(url: any): void;
-    setDefinitionsFromSource(url: any): void;
+    setDefinitionsFromSource(url: string): void;
 }

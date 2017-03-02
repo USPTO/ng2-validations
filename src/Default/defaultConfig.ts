@@ -1,6 +1,6 @@
 // Initial configuration file for validators
 // Written as a TS Object but using simple JSON Object will work as well
-export const validationConfig = {
+export const initialValidationConfig = {
     'attorneyDocketNumber': {
         'validators': ['noSpecialCharsAttorney'],
 		'conditions': [],

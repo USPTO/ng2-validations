@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:no-unused-variable
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Response } from '@angular/http';
 
 import { HttpService } from './http-services';
 // import { validationDefinitions as defs } from './initial-validation-definitions';
 
-import { initialValidationConfig }  from './initial-validations';
-import { validationDefinitions } from './Samples/sample-validation-definitions';
+import { initialValidationConfig }  from './Default/defaultConfig';
+import { validationDefinitions } from './Default/defaultDefinitions';
 
 @Injectable()
 export class NgValidations {
@@ -171,7 +172,7 @@ export class NgValidations {
 	// ***Call these methods to set validation configuration or definitions from an outside resource***
 	setConfigurationFromSource(url) {
 		this.http.getData(url)
-			.then((data) => {
+			.then((data: Response) => {
 				this.validators = data;
 			})
 			.catch(() => {
@@ -179,10 +180,13 @@ export class NgValidations {
 			});
 	}
 
-	setDefinitionsFromSource(url) {
+	setDefinitionsFromSource(url: string) {
 		this.http.getData(url)
-			.then((data) => {
-				this.validationDefinitions = JSON.parse(data);
+			.then((data: string | Response) => {
+				if (typeof data === 'string' )
+					this.validationDefinitions = JSON.parse(data);
+				else
+					this.validationDefinitions = data;
 			})
 			.catch(() => {
 				console.warn(`Unable to retrieve definitions from "${url}"...switching to local validation definitions`);

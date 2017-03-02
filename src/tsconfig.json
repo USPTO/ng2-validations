@@ -11,7 +11,8 @@
         "outDir": "../lib",
         "suppressImplicitAnyIndexErrors": true,
         "declaration": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+         "lib": ["es5", "dom", "ES2015","ES2015.Core","ES2015.Proxy","ES2015.Promise"]
     },
     "types": [
       "google-libphonenumber"
