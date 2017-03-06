@@ -15,7 +15,102 @@ export class NgValidations {
 	private validators = {}; // <+ Object to hold validator configuration. Can be changed with setValidationsWithService() or setValidatorConfiguration()
 	private validationDefinitions= {}; // <= Object to hold actual validation functions
 
-	constructor(private http: HttpService, private fb: FormBuilder) {}
+	constructor(private http: HttpService, private fb: FormBuilder) {
+		this.useDefaultConfig();
+	}
+
+	private createValidationMessageArrray(validations) {
+		// tslint:disable-next-line:no-unused-variable
+		let messagesForDisplay = [];
+		return Object.keys(validations).map(key => {
+				return { name: key, message: validations[key].message};
+			});
+	}
+
+	private setValidators(validators: Array<any>, required?) {
+		let vals = validators; // .map(val => val.test)
+		return required ? [Validators.required, ...vals] : vals;
+	}
+
+	private checkIfRequired(conditionalReq: boolean, staticReq?: boolean) {
+		if (staticReq) return [Validators.required];
+		return conditionalReq ? [Validators.required] : [];
+	}
+
+	private mapValidators(val) {
+		let f = function(c) { return null; };
+		try {
+			let test = this.validationDefinitions[val][val];
+			return test;
+		} catch (error) {
+			console.error(`Definition "${val}" missing from validator definitions file.`);
+			return f;
+		}
+	}
+
+ 	private bindStaticValidations(control: FormControl, controlName: string) {
+		if (this.validators[controlName]) {
+			const vals = this.validators[controlName].validators.map(this.mapValidators);
+			const required = this.validators[controlName].required;
+			control.setValidators(this.setValidators(vals, required));
+			control.updateValueAndValidity();
+		}
+	}
+
+	private handleConditionalValidations(control: string, form: FormGroup) {
+		// Identify conditional validators for control
+		const conditions = this.validators[control].conditions;
+
+		// Subscribe to form control value changes
+		const changes = form.controls[control].valueChanges;
+		// Execute function on any formControl value change...will update validations if match
+		changes.subscribe(value => {
+			let conditionsToValidate: Array<any> = [];
+			// Check each condition on value change
+			conditions.forEach((condition, index) => {
+				const currentControl = form.controls[condition.control];
+				const staticValidators =  this.validators[condition.control].validators.map(this.mapValidators);
+				const staticRequired = this.validators[condition.control].required || false;
+				let conditionalValidators = [];
+				let controlRequired = false;
+				let requiredValidators = [];
+				// If controls new value matches condition value
+				if (currentControl && condition.values.indexOf(value) >= 0) {
+					// Add condition to conditionsToValidate
+					conditionsToValidate = [...conditionsToValidate, conditions[index]];
+				}
+				// If new control value does not match & is in conditionsToValidate array
+				// tslint:disable-next-line:one-line
+				else if (currentControl && conditionsToValidate.indexOf(condition) >= 0) {
+					// Remove condition
+					conditionsToValidate = conditionsToValidate.filter(c => c !== condition);
+				}
+				// Check if control is required in any of the applied conditions
+				controlRequired = (<any>conditionsToValidate).findIndex(formControl => {
+					return formControl.required === true;
+				}) >= 0;
+
+				// Map conditionalValidators to validation definitions
+				conditionalValidators = conditionsToValidate.map(c => c.tests.map(this.mapValidators).reduce((a, b) => a.concat(b), []));
+				requiredValidators = this.checkIfRequired(controlRequired, staticRequired);
+				// Update form control with new validations
+				// <==== If curentControl is not empty or is required
+					// Need Null check to avoid error on finding properties of null values
+				if ((currentControl.value === null || currentControl.value.length) || requiredValidators.length) {
+					currentControl.setValidators([
+						...conditionalValidators,
+						...staticValidators,
+						...requiredValidators
+					]);
+				// If currentControl is empty and not required reset validators to null
+				} else {
+					currentControl.setValidators([]);
+				}
+				currentControl.updateValueAndValidity();
+			});
+		});
+	}
+
 	/*
 	Method called to bind validations to a form. Simply pass in the form and all validations will be bound, inluding conditionals.
 	This methods returns a object with two keys:
@@ -23,7 +118,7 @@ export class NgValidations {
 		2) messages: An array of validators with thier messages to use in the html template with *ngFor
 			...loop through this to dynamically display error messages on unmet validations
 	*/
-	bindFormValidations(form) {
+	public bindFormValidations(form) {
 		if (!this.validators || !this.validationDefinitions) {
 			console.warn('Service does not have a valid configuration file. Dynamic validations will not be applied');
 			return null;
@@ -58,71 +153,8 @@ export class NgValidations {
 
 	}
 
- 	bindStaticValidations(control: FormControl, controlName: string) {
-		if (this.validators[controlName]) {
-			const vals = this.validators[controlName].validators.map(val => this.validationDefinitions[val][val]);
-			const required = this.validators[controlName].required;
-			control.setValidators(this.setValidators(vals, required));
-			control.updateValueAndValidity();
-		}
-	}
-
-	handleConditionalValidations(control: string, form: FormGroup) {
-		// Identify conditional validators for control
-		const conditions = this.validators[control].conditions;
-
-		// Subscribe to form control value changes
-		const changes = form.controls[control].valueChanges;
-		// Execute function on any formControl value change...will update validations if match
-		changes.subscribe(value => {
-			let conditionsToValidate: Array<any> = [];
-			// Check each condition on value change
-			conditions.forEach((condition, index) => {
-				const currentControl = form.controls[condition.control];
-				const staticValidators =  this.validators[condition.control].validators.map(val => this.validationDefinitions[val][val]);
-				const staticRequired = this.validators[condition.control].required || false;
-				let conditionalValidators = [];
-				let controlRequired = false;
-				let requiredValidators = [];
-				// If controls new value matches condition value
-				if (currentControl && condition.values.indexOf(value) >= 0) {
-					// Add condition to conditionsToValidate
-					conditionsToValidate = [...conditionsToValidate, conditions[index]];
-				}
-				// If new control value does not match & is in conditionsToValidate array
-				// tslint:disable-next-line:one-line
-				else if (currentControl && conditionsToValidate.indexOf(condition) >= 0) {
-					// Remove condition
-					conditionsToValidate = conditionsToValidate.filter(c => c !== condition);
-				}
-				// Check if control is required in any of the applied conditions
-				controlRequired = (<any>conditionsToValidate).findIndex(formControl => {
-					return formControl.required === true;
-				}) >= 0;
-
-				// Map conditionalValidators to validation definitions
-				conditionalValidators = conditionsToValidate.map(c => c.tests.map(test => this.validationDefinitions[test][test])).reduce((a, b) => a.concat(b), []);
-				requiredValidators = this.checkIfRequired(controlRequired, staticRequired);
-				// Update form control with new validations
-				// <==== If curentControl is not empty or is required
-					// Need Null check to avoid error on finding properties of null values
-				if ((currentControl.value === null || currentControl.value.length) || requiredValidators.length) {
-					currentControl.setValidators([
-						...conditionalValidators,
-						...staticValidators,
-						...requiredValidators
-					]);
-				// If currentControl is empty and not required reset validators to null
-				} else {
-					currentControl.setValidators([]);
-				}
-				currentControl.updateValueAndValidity();
-			});
-		});
-	}
-
 	// Needs to bind form controls to the class that called it to work correctly
-	createFormWithValidation(obj) {
+	public createFormWithValidation(obj) {
 		if (!this.validators || !this.validationDefinitions) {
 			console.warn('Service does not have a valid configuration file. Dynamic validations will not be applied');
 			return null;
@@ -136,41 +168,56 @@ export class NgValidations {
 		};
 	}
 
-	createValidationMessageArrray(validations) {
-		// tslint:disable-next-line:no-unused-variable
-		let messagesForDisplay = [];
-		return Object.keys(validations).map(key => {
-				return { name: key, message: validations[key].message};
-			});
-	}
-
-	setValidators(validators: Array<any>, required?) {
-		let vals = validators; // .map(val => val.test)
-		return required ? [Validators.required, ...vals] : vals;
-	}
-
-	checkIfRequired(conditionalReq: boolean, staticReq?: boolean) {
-		if (staticReq) { return [Validators.required]; }
-		return conditionalReq ? [Validators.required] : [];
-	}
-
 	// ***** Methods to set configration and definitions
-	setValidatorDefinitions(definitiions) {
+	public setValidatorDefinitions(definitiions) {
 		this.validationDefinitions = definitiions;
 	}
 
-	setValidatorConfiguration(config) {
+	public setValidatorConfiguration(config) {
 		this.validators = config;
 	}
 
 	// Use default configurations and definitions
-	useDefaultConfig() {
+	public useDefaultConfig() {
 		this.setValidatorConfiguration(initialValidationConfig);
 		this.setValidatorDefinitions(validationDefinitions);
 	}
 
+	// ***Add or Modify Validations ***
+	public updateValidatorDefinitions(definitions: {}) {
+		for (let def in definitions) {
+			if (definitions[def].hasOwnProperty(def) && definitions[def].hasOwnProperty('message'))
+				this.validationDefinitions[def] = definitions[def];
+			else
+				console.warn(`Validator "${def}" is not defined in the proper format and has not been 
+				added/updated.\n Please see the default validators for a sample of the required format for definitions.`);
+		}
+	}
+
+	public updateValidatorConfig(config: {}) {
+		for (let ctr in config) {
+			if (config[ctr].hasOwnProperty('required') && config[ctr].hasOwnProperty('conditions') && config[ctr].hasOwnProperty('validators'))
+				this.validators[ctr] = config[ctr];
+			else {
+				if (!config[ctr].hasOwnProperty['required'])
+					config[ctr].required = false;
+				if (!config[ctr].hasOwnProperty['conditions'])
+					config[ctr].conditions = [];
+				if (!config[ctr].hasOwnProperty['validators'])
+					config[ctr].validators = [];
+				this.validators[ctr] = config[ctr];
+			}
+		}
+	}
+
+	public updateDefinitionsAndConfig(definitions: {}, config: {}) {
+		if (!definitions || !config) return;
+		this.updateValidatorConfig(config);
+		this.updateValidatorDefinitions(definitions);
+	}
+
 	// ***Call these methods to set validation configuration or definitions from an outside resource***
-	setConfigurationFromSource(url) {
+	public setConfigurationFromSource(url) {
 		this.http.getData(url)
 			.then((data: Response) => {
 				this.validators = data;
@@ -180,7 +227,7 @@ export class NgValidations {
 			});
 	}
 
-	setDefinitionsFromSource(url: string) {
+	public setDefinitionsFromSource(url: string) {
 		this.http.getData(url)
 			.then((data: string | Response) => {
 				if (typeof data === 'string' )
