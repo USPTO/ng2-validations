@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpService } from './http-services';
 export declare class NgValidations {
     private http;
@@ -6,6 +6,12 @@ export declare class NgValidations {
     private validators;
     private validationDefinitions;
     constructor(http: HttpService, fb: FormBuilder);
+    private createValidationMessageArrray(validations);
+    private setValidators(validators, required?);
+    private checkIfRequired(conditionalReq, staticReq?);
+    private mapValidators(val);
+    private bindStaticValidations(control, controlName);
+    private handleConditionalValidations(control, form);
     bindFormValidations(form: any): {
         messages: {
             name: string;
@@ -13,8 +19,6 @@ export declare class NgValidations {
         }[];
         controls: any[];
     };
-    bindStaticValidations(control: FormControl, controlName: string): void;
-    handleConditionalValidations(control: string, form: FormGroup): void;
     createFormWithValidation(obj: any): {
         form: FormGroup;
         controls: any[];
@@ -23,17 +27,12 @@ export declare class NgValidations {
             message: any;
         }[];
     };
-    createValidationMessageArrray(validations: any): {
-        name: string;
-        message: any;
-    }[];
-    setValidators(validators: Array<any>, required?: any): any[];
-    checkIfRequired(conditionalReq: boolean, staticReq?: boolean): ((control: AbstractControl) => {
-        [key: string]: boolean;
-    })[];
     setValidatorDefinitions(definitiions: any): void;
     setValidatorConfiguration(config: any): void;
     useDefaultConfig(): void;
+    updateValidatorDefinitions(definitions: {}): void;
+    updateValidatorConfig(config: {}): void;
+    updateDefinitionsAndConfig(definitions: {}, config: {}): void;
     setConfigurationFromSource(url: any): void;
     setDefinitionsFromSource(url: string): void;
 }
