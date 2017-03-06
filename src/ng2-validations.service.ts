@@ -38,7 +38,7 @@ export class NgValidations {
 	}
 
 	private mapValidators(val) {
-		let f = function(c) { return null; };
+		const f = (c) => null;
 		try {
 			let test = this.validationDefinitions[val][val];
 			return test;
