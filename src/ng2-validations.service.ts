@@ -16,6 +16,7 @@ export class NgValidations {
 	private validationDefinitions= {}; // <= Object to hold actual validation functions
 
 	constructor(private http: HttpService, private fb: FormBuilder) {
+		this.mapValidators = this.mapValidators.bind(this);
 		this.useDefaultConfig();
 	}
 
