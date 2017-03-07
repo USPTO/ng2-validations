@@ -33,6 +33,7 @@ export declare class NgValidations {
     updateValidatorDefinitions(definitions: {}): void;
     updateValidatorConfig(config: {}): void;
     updateDefinitionsAndConfig(definitions: {}, config: {}): void;
+    updateValidatorMessages(validators: {}): void;
     setConfigurationFromSource(url: any): void;
     setDefinitionsFromSource(url: string): void;
 }
