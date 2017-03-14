@@ -8,7 +8,7 @@ import * as moment from 'moment';
 export const validationDefinitions = {
     dateFormat: {
 		dateFormat: function(c: FormControl) {
-			if (!c.value) return null;
+			if (!c || !c.value) return null;
 			if (!moment(c.value, 'MM-DD-YYYY', true).isValid() && !moment(c.value, 'YYYY-MM-DD', true).isValid()) {
 				return { dateFormat: false };
 			}
@@ -56,7 +56,7 @@ export const validationDefinitions = {
 	},
 	invalidDate: {
 		invalidDate: function(c: FormControl) {
-			if (!c.value) return null;
+			if (!c || !c.value) return null;
 			if (!moment(c.value, 'MM-DD-YYYY').isValid() && !moment(c.value, 'YYYY-MM-DD').isValid()) {
 				return { invalidDate: false };
 			}
@@ -141,7 +141,7 @@ export const validationDefinitions = {
 		message: 'Invalid email.'
 	},
 	validPhoneNumberSimple: {
-		simpleValidPhoneNumber: function(c: FormControl) {
+		validPhoneNumberSimple: function(c: FormControl) {
 			if (!c.value) return null;
 			let specialChars = /[^0-9]/gi;
 			return specialChars.test(c.value) ? { validPhoneNumberSimple: false } : null;

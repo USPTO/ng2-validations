@@ -73,7 +73,7 @@ export declare const validationDefinitions: {
         message: string;
     };
     validPhoneNumberSimple: {
-        simpleValidPhoneNumber: (c: FormControl) => {
+        validPhoneNumberSimple: (c: FormControl) => {
             validPhoneNumberSimple: boolean;
         };
         message: string;
