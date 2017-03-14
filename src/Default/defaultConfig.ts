@@ -65,15 +65,10 @@ export const initialValidationConfig = {
 		'required': true
     },
     'phoneNumber': {
-        'validators': [],
+        'validators': ['validPhoneNumberSimple'],
 		'conditions': [],
 		'required': true
     },
-	'phoneNumberGroup': {
-		'validators': ['validPhoneNumberSimple'],
-		'conditions': [],
-		'required': true
-	},
     'stateCode': {
 		'validators': [],
 		'conditions': [],

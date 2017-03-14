@@ -35,7 +35,7 @@ export const validationDefinitions = {
 	firstNameFormat: {
 		firstNameFormat: function(c: FormControl) {
 			if (!c || !c.value) return null;
-			let nameTest =  /[^a-z0-9\-_'\&\(\)\s\,:\/\#\@]/gi;
+			let nameTest =  /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
 			return nameTest.test(c.value) ? { firstNameFormat: false } : null;
 		},
 		message: `First Name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
@@ -46,7 +46,7 @@ export const validationDefinitions = {
 	lastNameFormat: {
 		lastNameFormat: function(c: FormControl) {
 			if (!c || !c.value) return null;
-			let nameTest =  /[^a-z0-9\-_'\&\(\)\s\,:\/\#\@]/gi;
+			let nameTest =  /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
 			return nameTest.test(c.value) ? { lastNameFormat: false } : null;
 		},
 		message: `Last Name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
@@ -82,12 +82,9 @@ export const validationDefinitions = {
 	},
     streetLineOne: {
 		streetLineOne: function(c: FormControl) {
-			if (!c.value) return null;
-			let specialChars = /[^a-z0-9\-_'\&\(\)\s\,:\/\#\@]/gi;
-			let letters = /[a-z]/gi;
-			let test = c.value.replace(/[\W_]/gi, '');
-			if (!test.length) return null;
-            return (!letters.test(test)) || specialChars.test(test) ? { streetLineOne: false } : null;
+			if (!c || !c.value) return null;
+			let specialChars = /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
+            return specialChars.test(c.value) ? { streetLineOne: false } : null;
 		},
 		message: `Address Line One is limited to the following characters: Uppercase letters (A—Z), Lowercase 
 		letters (a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), 
@@ -96,8 +93,8 @@ export const validationDefinitions = {
 	},
 	 streetLineTwo: {
 		streetLineTwo: function(c: FormControl) {
-			if (!c.value) return null;
-			let specialChars = /[^a-z0-9\-_'\&\(\)\s\,:\/\#\@]/gi;
+			if (!c || !c.value) return null;
+			let specialChars = /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
             return specialChars.test(c.value) ? { streetLineTwo: false } : null;
 		},
 		message: `Address Line Two is limited to the following characters: Uppercase letters (A—Z), Lowercase 
@@ -107,7 +104,7 @@ export const validationDefinitions = {
 	},
 	noSpecialCharsAttorney: {
 		noSpecialCharsAttorney: function(c: FormControl) {
-			if (!c.value) return null;
+			if (!c || !c.value) return null;
 			let specialChars = /[^a-z0-9.-]/gi;
 			return specialChars.test(c.value) ? { noSpecialCharsAttorney: false } : null;
 		},
@@ -143,7 +140,7 @@ export const validationDefinitions = {
 	validPhoneNumberSimple: {
 		validPhoneNumberSimple: function(c: FormControl) {
 			if (!c || !c.value) return null;
-			let specialChars = /[^0-9]/gi;
+			let specialChars = /[^0-9]/g;
 			return specialChars.test(c.value) ? { validPhoneNumberSimple: false } : null;
 		},
 		message: 'Enter phone number without special characters.'

@@ -65,11 +65,6 @@ export declare const initialValidationConfig: {
         'required': boolean;
     };
     'phoneNumber': {
-        'validators': any[];
-        'conditions': any[];
-        'required': boolean;
-    };
-    'phoneNumberGroup': {
         'validators': string[];
         'conditions': any[];
         'required': boolean;
