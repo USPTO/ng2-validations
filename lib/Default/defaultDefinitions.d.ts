@@ -12,6 +12,18 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
+    firstNameFormat: {
+        firstNameFormat: (c: FormControl) => {
+            firstNameFormat: boolean;
+        };
+        message: string;
+    };
+    lastNameFormat: {
+        lastNameFormat: (c: FormControl) => {
+            lastNameFormat: boolean;
+        };
+        message: string;
+    };
     invalidDate: {
         invalidDate: (c: FormControl) => {
             invalidDate: boolean;
@@ -24,15 +36,15 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
-    noSpecialChars: {
-        noSpecialChars: (c: FormControl) => {
-            noSpecialChars: boolean;
+    streetLineOne: {
+        streetLineOne: (c: FormControl) => {
+            streetLineOne: boolean;
         };
         message: string;
     };
-    noSpecialCharsAddress: {
-        noSpecialCharsAddress: (c: FormControl) => {
-            noSpecialCharsAddress: boolean;
+    streetLineTwo: {
+        streetLineTwo: (c: FormControl) => {
+            streetLineTwo: boolean;
         };
         message: string;
     };
@@ -42,9 +54,9 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
-    noSpecialCharsCity: {
-        noSpecialCharsCity: (c: FormControl) => {
-            noSpecialCharsCity: boolean;
+    cityFormat: {
+        cityFormat: (c: FormControl) => {
+            cityFormat: boolean;
         };
         message: string;
     };
@@ -60,16 +72,17 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
-    validPhoneNumberInternational: {
-        validPhoneNumberInternational: (values: FormGroup) => {
-            validPhoneNumberInternational: boolean;
-        };
-        message: string;
-    };
     validPhoneNumberSimple: {
         simpleValidPhoneNumber: (c: FormControl) => {
             validPhoneNumberSimple: boolean;
         };
+        message: string;
+    };
+    zipCodeUS: {
+        zipCodeUS: (c: FormControl) => {
+            zipCodeUS: boolean;
+        };
+        message: string;
     };
     validZipCode: {
         validZipCode: (c: FormControl) => {

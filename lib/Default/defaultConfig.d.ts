@@ -1,6 +1,6 @@
 export declare const initialValidationConfig: {
     'attorneyDocketNumber': {
-        'validators': string[];
+        'validators': any[];
         'conditions': any[];
         'required': boolean;
     };
@@ -45,12 +45,12 @@ export declare const initialValidationConfig: {
         'required': boolean;
     };
     'firstName': {
-        'validators': any[];
+        'validators': string[];
         'conditions': any[];
         'required': boolean;
     };
     'lastName': {
-        'validators': any[];
+        'validators': string[];
         'conditions': any[];
         'required': boolean;
     };
@@ -95,7 +95,7 @@ export declare const initialValidationConfig: {
         'required': boolean;
     };
     'zipCode': {
-        'validators': any[];
+        'validators': string[];
         'conditions': any[];
         'required': boolean;
     };

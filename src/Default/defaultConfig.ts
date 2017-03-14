@@ -2,12 +2,12 @@
 // Written as a TS Object but using simple JSON Object will work as well
 export const initialValidationConfig = {
     'attorneyDocketNumber': {
-        'validators': ['noSpecialCharsAttorney'],
+        'validators': [],
 		'conditions': [],
 		'required': false
     },
     'city': {
-        'validators': ['noSpecialCharsCity'],
+        'validators': ['cityFormat'],
 		'conditions': [],
 		'required': true
     },
@@ -20,7 +20,7 @@ export const initialValidationConfig = {
         'validators': [],
 		'conditions': [
 			{'control': 'stateName', 'values': ['United States', 'UNITED STATES'], 'tests': [], 'required': true},
-            {'control': 'zipCode', 'values': ['United States', 'UNITED STATES'], 'tests': ['validZipCode'], 'required': true}
+            {'control': 'zipCode', 'values': ['United States', 'UNITED STATES'], 'tests': ['zipCodeUS'], 'required': true}
 		],
 		'required': true
     },
@@ -45,12 +45,12 @@ export const initialValidationConfig = {
 		'required': false
 	},
     'firstName': {
-        'validators': [],
+        'validators': ['firstNameFormat'],
 		'conditions': [],
 		'required': true
     },
     'lastName': {
-        'validators': [],
+        'validators': ['lastNameFormat'],
 		'conditions': [],
 		'required': true
     },
@@ -70,7 +70,7 @@ export const initialValidationConfig = {
 		'required': true
     },
 	'phoneNumberGroup': {
-		'validators': ['validPhoneNumberInternational'],
+		'validators': ['validPhoneNumberSimple'],
 		'conditions': [],
 		'required': true
 	},
@@ -85,17 +85,17 @@ export const initialValidationConfig = {
 		'required': false
 	},
     'streetLineOne': {
-        'validators': ['noSpecialCharsAddress'],
+        'validators': ['streetLineOne'],
 		'conditions': [],
 		'required': true
     },
      'streetLineTwo': {
-        'validators': ['noSpecialCharsAddress'],
+        'validators': ['streetLineTwo'],
 		'conditions': [],
 		'required': false
     },
     'zipCode': {
-        'validators': [],
+        'validators': ['validZipCode'],
 		'conditions': [],
 		'required': false
     }

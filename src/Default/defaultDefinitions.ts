@@ -1,6 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
-import { PhoneNumberUtil } from 'google-libphonenumber';
 
 // ======= Test functions for validation =======
 // **Important**
@@ -15,7 +14,7 @@ export const validationDefinitions = {
 			}
 			return null;
 		},
-		message: 'Date format must be MMDDYYYY'
+		message: 'Enter valid date in the format mm/dd/yyyy.'
 	},
 	dateRangeGroup: {
 		dateRangeGroup: function(values: FormGroup) {
@@ -31,7 +30,29 @@ export const validationDefinitions = {
 				}
 				return null;
 		},
-		message: '"From Date" must be equal to or less than "To Date"'
+		message: 'From Date must be equal to or less than To Date.'
+	},
+	firstNameFormat: {
+		firstNameFormat: function(c: FormControl) {
+			if (!c || !c.value) return null;
+			let nameTest =  /[^a-z0-9\-_'\&\(\)\s\,:\/\#\@]/gi;
+			return nameTest.test(c.value) ? { firstNameFormat: false } : null;
+		},
+		message: `First Name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
+		(a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), Left Parenthesis ((), 
+		Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), Colon (:), At Sign (@), 
+		Underscore (_).`
+	},
+	lastNameFormat: {
+		lastNameFormat: function(c: FormControl) {
+			if (!c || !c.value) return null;
+			let nameTest =  /[^a-z0-9\-_'\&\(\)\s\,:\/\#\@]/gi;
+			return nameTest.test(c.value) ? { lastNameFormat: false } : null;
+		},
+		message: `Last Name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
+		(a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), Left Parenthesis ((), 
+		Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), Colon (:), At Sign (@), 
+		Underscore (_).`
 	},
 	invalidDate: {
 		invalidDate: function(c: FormControl) {
@@ -41,7 +62,7 @@ export const validationDefinitions = {
 			}
 			return null;
 		},
-		message: 'Date format must be MMDDYYYY'
+		message: 'Enter valid date in the format mm/dd/yyyy.'
 	},
 	noFutureDate: {
 		noFutureDate : function(c: FormControl) {
@@ -57,26 +78,32 @@ export const validationDefinitions = {
 			}
 			return null;
 		},
-		message: 'Dates cannot be in the future'
+		message: 'Dates cannot be in the future.'
 	},
-    noSpecialChars: {
-		noSpecialChars: function(c: FormControl) {
+    streetLineOne: {
+		streetLineOne: function(c: FormControl) {
 			if (!c.value) return null;
-			let specialChars = /[^a-z0-9.-]/gi;
-			return specialChars.test(c.value) ? { noSpecialChars: false } : null;
-		},
-		message: 'Cannot contain any special characters'
-	},
-    noSpecialCharsAddress: {
-		noSpecialCharsAddress: function(c: FormControl) {
-			if (!c.value) return null;
-			let specialChars = /[^a-z0-9,.-]/gi;
+			let specialChars = /[^a-z0-9\-_'\&\(\)\s\,:\/\#\@]/gi;
 			let letters = /[a-z]/gi;
 			let test = c.value.replace(/[\W_]/gi, '');
 			if (!test.length) return null;
-            return (!letters.test(test)) || specialChars.test(test) ? { noSpecialCharsAddress: false } : null;
+            return (!letters.test(test)) || specialChars.test(test) ? { streetLineOne: false } : null;
 		},
-		message: 'Please enter a valid address'
+		message: `Address Line One is limited to the following characters: Uppercase letters (A—Z), Lowercase 
+		letters (a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), 
+		Left Parenthesis ((), Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), 
+		Colon (:), At Sign (@), Underscore (_)`
+	},
+	 streetLineTwo: {
+		streetLineTwo: function(c: FormControl) {
+			if (!c.value) return null;
+			let specialChars = /[^a-z0-9\-_'\&\(\)\s\,:\/\#\@]/gi;
+            return specialChars.test(c.value) ? { streetLineTwo: false } : null;
+		},
+		message: `Address Line Two is limited to the following characters: Uppercase letters (A—Z), Lowercase 
+		letters (a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), 
+		Left Parenthesis ((), Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), 
+		Colon (:), At Sign (@), Underscore (_)`
 	},
 	noSpecialCharsAttorney: {
 		noSpecialCharsAttorney: function(c: FormControl) {
@@ -84,18 +111,16 @@ export const validationDefinitions = {
 			let specialChars = /[^a-z0-9.-]/gi;
 			return specialChars.test(c.value) ? { noSpecialCharsAttorney: false } : null;
 		},
-		message: 'Please enter a valid attorney docket number'
+		message: 'Invalid attorney docket number.'
 	},
-    noSpecialCharsCity: {
-		noSpecialCharsCity: function(c: FormControl) {
+    cityFormat: {
+		cityFormat: function(c: FormControl) {
 			if (!c.value) return null;
-			let specialChars = /[^a-z.-]/gi;
-			let letters = /[a-z]/gi;
-			let test = c.value.replace(/[\W_]/gi, '');
-			if (!test.length) return null;
-			return specialChars.test(test) && !letters.test(test) ? { noSpecialCharsCity: false } : null;
+			let specialChars = /[^a-z0-9\-_'\s]/gi;
+			return specialChars.test(c.value) ? { cityFormat: false } : null;
 		},
-		message: 'Please enter a valid city'
+		message: `City is limited to the following characters: Uppercase letters (A—Z), Lowercase letters (a–z), 
+		Space ( ), Numbers (0–9), Hyphen (-), Period (.), Apostrophe (‘), Underscore (_).`
 	},
 	paymentsRequired: {
 		paymentsRequired: function(c: FormControl) {
@@ -105,7 +130,7 @@ export const validationDefinitions = {
 			}
 			return null;
 		},
-		message: 'Please select at least one payment from the payment history table'
+		message: 'Select at least one payment.'
 	},
     validEmail: {
 		validEmail: function(c: FormControl) {
@@ -113,49 +138,31 @@ export const validationDefinitions = {
 			let emailExp = /^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.+[a-zA-Z0–9_.]+$/gi;
 			return emailExp.test(c.value) ? null : { validEmail: false };
 		},
-		message: 'Please enter a valid email'
-	},
-	validPhoneNumberInternational: {
-		validPhoneNumberInternational: function(values: FormGroup) {
-			if (!values || !values.controls['phoneNumber'] || !values.controls['countryCode']) {
-				console.warn('Validator "validPhoneNumberInternational" requires "phoneNumberGroup" FormGroup with controls: "phoneNumber" and "countryCode". Phone validation being ignored.');
-				return null;
-			}
-            let phone = (<any>values).controls['phoneNumber']._value,
-				code = (<any>values).controls['countryCode']._value,
-				l = /[a-z]/gi;
-			if (!phone || !code) {
-                return null;
-            }
-			const phoneUtil = PhoneNumberUtil.getInstance();
-			if (l.test(phone)) return { validPhoneNumberInternational: false};
-			try {
-				if (!phoneUtil.isValidNumber(phoneUtil.parse(phone, code))) {
-					return { validPhoneNumberInternational: false};
-				}
-			} catch (error) {
-				return { validPhoneNumberInternational: false};
-			}
-			return null;
-		},
-		message: 'Please enter a valid phone number'
+		message: 'Invalid email.'
 	},
 	validPhoneNumberSimple: {
 		simpleValidPhoneNumber: function(c: FormControl) {
 			if (!c.value) return null;
-			let specialChars = /[^a-z0-9.-]/gi;
-			if (c.value.length < 10 || c.value.length > 18 || specialChars.test(c.value)) {
-				return { validPhoneNumberSimple: false };
-			}
-			return null;
-		}
+			let specialChars = /[^0-9]/gi;
+			return specialChars.test(c.value) ? { validPhoneNumberSimple: false } : null;
+		},
+		message: 'Enter phone number without special characters.'
+	},
+	zipCodeUS: {
+		zipCodeUS: function(c: FormControl) {
+			if (!c || !c.value) return null;
+			let codes = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+			return codes.test(c.value) ? null : { zipCodeUS: false };
+		},
+		message: 'Enter Zip/Postal Code in the format of 99999 or 99999-9999.'
 	},
     validZipCode: {
         validZipCode: function(c: FormControl) {
             if (!c.value) return null;
-            let specialChars = /[^0-9-]/gi;
+            let specialChars = /[^a-z0-9\-_'\s]/gi;
 			 return specialChars.test(c.value) ? { validZipCode: false } : null;
 		},
-        message: 'Invalid zip code'
+        message: `Zip/Postal Code is limited to the following characters: Uppercase letters (A—Z), 
+		Lowercase letters (a–z), Space ( ), Numbers (0–9), Hyphen (-), Period (.), Apostrophe (‘), Underscore (_).`
     }
 };
