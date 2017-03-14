@@ -134,7 +134,7 @@ export const validationDefinitions = {
 	},
     validEmail: {
 		validEmail: function(c: FormControl) {
-			if (!c.value) return null;
+			if (!c || !c.value) return null;
 			let emailExp = /^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.+[a-zA-Z0–9_.]+$/gi;
 			return emailExp.test(c.value) ? null : { validEmail: false };
 		},
@@ -142,7 +142,7 @@ export const validationDefinitions = {
 	},
 	validPhoneNumberSimple: {
 		validPhoneNumberSimple: function(c: FormControl) {
-			if (!c.value) return null;
+			if (!c || !c.value) return null;
 			let specialChars = /[^0-9]/gi;
 			return specialChars.test(c.value) ? { validPhoneNumberSimple: false } : null;
 		},
@@ -151,14 +151,14 @@ export const validationDefinitions = {
 	zipCodeUS: {
 		zipCodeUS: function(c: FormControl) {
 			if (!c || !c.value) return null;
-			let codes = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+			let codes = /^\b\d{5}(-\d{4})?\b$/;
 			return codes.test(c.value) ? null : { zipCodeUS: false };
 		},
 		message: 'Enter Zip/Postal Code in the format of 99999 or 99999-9999.'
 	},
     validZipCode: {
         validZipCode: function(c: FormControl) {
-            if (!c.value) return null;
+            if (!c || !c.value) return null;
             let specialChars = /[^a-z0-9\-_'\s]/gi;
 			 return specialChars.test(c.value) ? { validZipCode: false } : null;
 		},
