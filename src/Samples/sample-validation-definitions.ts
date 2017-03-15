@@ -83,7 +83,8 @@ export const validationDefinitions = {
 	datePickerValid: {
 		datePickerValid: function(values: FormGroup) {
 			if (!values || !values.controls['dateFrom'] || !values.controls['dateTo']) {
-				console.warn('Validator "datePickerValid" requires dateRange FormGroup with controls: "dateFrom, dateTo". Datepicker validation being ignored.');
+				console.warn(`Validator "datePickerValid" requires dateRange FormGroup with controls: 
+				"dateFrom, dateTo". Datepicker validation being ignored.`);
 				return null;
 			}
 			let fromDate, toDate;
@@ -131,7 +132,8 @@ export const validationDefinitions = {
 	validPhoneNumberInternational: {
 		validPhoneNumberInternational: function(values: FormGroup) {
 			if (!values || !values.controls['phoneNumber'] || !values.controls['countryCode']) {
-				console.warn('Validator "validPhoneNumberInternational" requires "phoneGroup" FormGroup with controls: "phoneNumber" and "countryCode". Phone validation being ignored.');
+				console.warn(`Validator "validPhoneNumberInternational" requires "phoneGroup" FormGroup 
+				with controls: "phoneNumber" and "countryCode". Phone validation being ignored.`);
 				return null;
 			}
 			let phone = values.controls['phoneNumber'].value,
@@ -228,18 +230,3 @@ You can also define the validators as an object and refer to it in the validatio
 			return null;
 	}
 };
-
-/*
-	validPhoneNumber: {
-		validPhoneNumber: function(c: FormControl) {
-			if (!c.value) return null;
-			const phoneUtil = PhoneNumberUtil.getInstance();
-			if (!phoneUtil.isValidNumber(phoneUtil.parse(c.value, 'US'))) {
-				return { validPhoneNumber: false};
-			}
-			return null;
-		},
-		message: 'Please enter a valid phone number'
-
-	}
-	*/

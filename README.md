@@ -55,11 +55,11 @@ Ng2-Validations allows you to customize validations by creating your own configu
 
 ****Adding to or Modifying existing definitionstions/configuration****
 
-If your applications calls for adding to or modifying only part of the default validators it is best to use the update methods on NgValidations.
+If your application calls for adding to or modifying only part of the default validators it is best to use the update methods on NgValidations.
  - To add to or modify the configuration create a new TS object with the control name(s) and associated validators and conditions. Pass the object to updateValidatorConfig() method. Each control has 3 optional properties: required, conditions, and validators.These properties will default to false or [];
  - To add to or modify the definitions create a new TS object with one or more definitions in the proper format and pass it to the updateValidatorDefinitions method.
- - You can also update both the configuration and definitions by calling updateDefinitionsAndConfig. This method takes two paramete: A definitions object and a configuration object.
- - If you only want to change a message on one or more validators call updateValidatorMessages. This mnethod expects an object whose keys match up to the definitions that you want to modify and their associated messages. 
+ - You can also update both the configuration and definitions by calling updateDefinitionsAndConfig. This method takes two parameters: A definitions object and a configuration object.
+ - If you only want to change a message on one or more validators call updateValidatorMessages. This method expects an object whose keys match up to the definitions that you want to modify and their associated messages. 
 
 ```javascript
 // in your app.module or component.ts
@@ -69,19 +69,19 @@ export class <yourClass> {
 	ngOnInit() {
         let addConfig = { 
         		passwordTwo: {
-        			validators: ['validatorOne'],
+        			validators: ['passwordVal'],
                     conditions:[],
                     required: true
         		} 
         	}
     	let addDef = {
-        	passwordVal: {
-            	passwordVal: function(c: FormControl) {
-                	// Do some validations...
-                }
-                message: 'your message'
-            }
-        }
+        		passwordVal: {
+            		passwordVal: function(c: FormControl) {
+                		// Do some validation...
+                	}
+                	message: 'your message'
+            	}
+        	}
         
         // Update config
         this.ngValidations.updateValidatorConfig(addConfig)
@@ -93,7 +93,7 @@ export class <yourClass> {
         // Update validator messages
         this.ngValidations.updateValidatorMessages({
         	passwordVal: 'your new message for passwordVal definition',
-            otherDef: 'your new message for otherDef definition'
+            someOtherDef: 'your new message for someOtherDef definition'
         })
         
   	}
@@ -102,10 +102,12 @@ export class <yourClass> {
 ``` 
 
  ****Replacing Default Definitions and/or Configuration****
+ 
+ If you want to replace the entire default validator configuration and/or definitions with your own: 
  - Create a new TS or JSON configuration file with your control names and their applicable validations and conditions. In your application call the setValidatorConfiguration method and pass in your new file.
  - For custom validator definitions create a new TS object with the definitions for each validator and an associated error message. Call the setValidatorDefinitions method and pass in your new definitions object.
 
- - ** **IMPORTANT** ** Make sure that any new configurations or definitions follow the same pattern as [these](https://github.com/uspto/ng2-validations/tree/master/src/Samples) examples. Deviating from this pattern will likely cause unexpected behavior and your validations may not be applied.
+ - ** **IMPORTANT** ** Make sure that any new configurations or definitions follow the same pattern as [these](https://github.com/uspto/ng2-validations/tree/master/src/Default) examples. Deviating from this pattern will likely cause unexpected behavior and your validations may not be applied.
 
 ```javascript
 // in app.module.ts

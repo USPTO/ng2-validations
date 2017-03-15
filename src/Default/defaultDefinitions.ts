@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 
-// ======= Test functions for validation =======
+// ======= Default Test functions for validation =======
 // **Important**
 // Angular provides the name of the error on its invalid form controls. This structure makes it easy to loop
 // through the controls and display their associated error messages in the html template
@@ -19,7 +19,8 @@ export const validationDefinitions = {
 	dateRangeGroup: {
 		dateRangeGroup: function(values: FormGroup) {
 			if (!values || !values.controls['dateFrom'] || !values.controls['dateTo']) {
-				console.warn('Validator "dateRangeGroup" requires dateRange FormGroup with controls: "dateFrom, dateTo". dateRangeGroup validation being ignored.');
+				console.warn(`Validator "dateRangeGroup" requires dateRange FormGroup with controls: 
+				"dateFrom, dateTo". dateRangeGroup validation being ignored.`);
 				return null;
 			}
 			let fromDate, toDate;
