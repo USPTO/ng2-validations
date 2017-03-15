@@ -30,8 +30,14 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
-    noFutureDate: {
-        noFutureDate: (c: FormControl) => {
+    futureDateFrom: {
+        futureDateFrom: (c: FormControl) => {
+            noFutureDate: boolean;
+        };
+        message: string;
+    };
+    futureDateTo: {
+        futureDateTo: (c: FormControl) => {
             noFutureDate: boolean;
         };
         message: string;

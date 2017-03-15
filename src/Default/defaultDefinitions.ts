@@ -38,7 +38,7 @@ export const validationDefinitions = {
 			let nameTest =  /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
 			return nameTest.test(c.value) ? { firstNameFormat: false } : null;
 		},
-		message: `First Name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
+		message: `First name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
 		(a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), Left Parenthesis ((), 
 		Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), Colon (:), At Sign (@), 
 		Underscore (_).`
@@ -49,7 +49,7 @@ export const validationDefinitions = {
 			let nameTest =  /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
 			return nameTest.test(c.value) ? { lastNameFormat: false } : null;
 		},
-		message: `Last Name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
+		message: `Last name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
 		(a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), Left Parenthesis ((), 
 		Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), Colon (:), At Sign (@), 
 		Underscore (_).`
@@ -64,8 +64,8 @@ export const validationDefinitions = {
 		},
 		message: 'Enter valid date in the format mm/dd/yyyy.'
 	},
-	noFutureDate: {
-		noFutureDate : function(c: FormControl) {
+	futureDateFrom: {
+		futureDateFrom : function(c: FormControl) {
             if (!c.value || (!moment(c.value, 'MM-DD-YYYY').isValid() && !moment(c.value, 'YYYY-MM-DD').isValid())) return null;
             let format = 'YYYY-MM-DD';
             if (isNaN(moment(c.value, format).unix())) {
@@ -78,7 +78,23 @@ export const validationDefinitions = {
 			}
 			return null;
 		},
-		message: 'Dates cannot be in the future.'
+		message: 'From Date cannot be in the future.'
+	},
+	futureDateTo: {
+		futureDateTo : function(c: FormControl) {
+            if (!c.value || (!moment(c.value, 'MM-DD-YYYY').isValid() && !moment(c.value, 'YYYY-MM-DD').isValid())) return null;
+            let format = 'YYYY-MM-DD';
+            if (isNaN(moment(c.value, format).unix())) {
+                format = 'MM-DD-YYYY';
+            }
+			let controlDate = moment(c.value, format).unix();
+			let now = moment().unix();
+			if (controlDate > now) {
+				return { noFutureDate: false };
+			}
+			return null;
+		},
+		message: 'To Date cannot be in the future.'
 	},
     streetLineOne: {
 		streetLineOne: function(c: FormControl) {
@@ -86,7 +102,7 @@ export const validationDefinitions = {
 			let specialChars = /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
             return specialChars.test(c.value) ? { streetLineOne: false } : null;
 		},
-		message: `Address Line One is limited to the following characters: Uppercase letters (A—Z), Lowercase 
+		message: `Address Line 1 is limited to the following characters: Uppercase letters (A—Z), Lowercase 
 		letters (a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), 
 		Left Parenthesis ((), Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), 
 		Colon (:), At Sign (@), Underscore (_)`
@@ -97,7 +113,7 @@ export const validationDefinitions = {
 			let specialChars = /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
             return specialChars.test(c.value) ? { streetLineTwo: false } : null;
 		},
-		message: `Address Line Two is limited to the following characters: Uppercase letters (A—Z), Lowercase 
+		message: `Address Line 2 is limited to the following characters: Uppercase letters (A—Z), Lowercase 
 		letters (a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), 
 		Left Parenthesis ((), Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), 
 		Colon (:), At Sign (@), Underscore (_)`
@@ -143,7 +159,7 @@ export const validationDefinitions = {
 			let specialChars = /[^0-9]/g;
 			return specialChars.test(c.value) ? { validPhoneNumberSimple: false } : null;
 		},
-		message: 'Enter phone number without special characters.'
+		message: 'Enter phone number without special characters or letters.'
 	},
 	zipCodeUS: {
 		zipCodeUS: function(c: FormControl) {

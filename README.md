@@ -14,18 +14,22 @@ FPNG service designed to make validations on Angular 2 forms easy.
  - Import NgValidationsModule and NgValidations from ng2-validations
  - Add NgValidationsModule to your NgModel imports, preferably at the root level of your application
  - Inject NgValidations into your app module constructor 
+ - Ng2-Validations uses Angular's FormsModule, ReactiveFormsModule, and FormBuilder so be sure to import those as well
 
 ```javascript
 // in app.module.ts
 import { NgValidations , NgValidationsModule } from 'ng2-validations';
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms'
   
 @NgModule({
 	...,
 	imports: [
 		...,
-		NgValidationsModule
+		NgValidationsModule,
+        FormsModule,
+        ReactiveFormsModule
 	],
-	providers: [...
+	providers: [ FormBuilder, ...
 })
 export class <yourAppModule> {
 	constructor(private ngValidations: NgValidations){}
@@ -40,26 +44,65 @@ export class <yourAppModule> {
 
 **Default Validators and Configuration**
 
-The validation service relies on a JSON configuration file consisting of form control names and their associated validation properties.  A sample configuration file can be found [here](https://github.com/uspto/ng2-validations/blob/master/src/Samples/example-config.json) and ships with the service. The dynamic validations also require validator function definitions which can be found [here](https://github.com/uspto/ng2-validations/blob/master/src/Samples/sample-validation-definitions.ts). To use the default configuration and definitions in your application simply call the useDefaultConfig method in your app.module ngOnInit method. 
+The validation service relies on a configuration file in either a TS or JSON object consisting of form control names and their associated validation properties.  A sample configuration file can be found [here](https://github.com/USPTO/ng2-validations/blob/master/src/Default/defaultConfig.ts) and ships with the service. The dynamic validations also require validator function definitions which can be found [here](https://github.com/USPTO/ng2-validations/blob/common/src/Default/defaultDefinitions.ts). The default configuration and definitions are available to your application, no need to modify anything. As we are still actively developing and testing this service, more common validations will be added to the configuation and definitions files soon. Stay tuned...
 
-** **NOTE** ** Currently the default configuration and definitions are for demonstration purposes only. As we are still actively developing and testing this service, most common validations will be added to the configuation and definitions files soon. Stay tuned...
+** **NOTE** ** Previously, using the default values required calling NgValidations.useDefaultConfig() somewhere in the application. This is no longer necessary as the default settings will automacially be applied unless overridden. 
 
-```javascript
-// in app.module.ts
 
-export class <yourAppModule> {
-  constructor(private ngValidations: NgValidations) {}
-  
-  ngOnInit() {
- 		this.ngValidations.useDefaultConfig()
-  }
-}  
-```
 **Custom Validators and Configuration**
 
-Ng2-Validations allows you to customize validations by creating your own configurations and/or validator definitions. 
+Ng2-Validations allows you to customize validations by creating your own configurations and/or validator definitions.
 
- - To use a custom configuration create a new JSON configuration file with your control names and their applicable validations and conditions. In your application call the setValidatorConfiguration method and pass in your new JSON file.
+****Adding to or Modifying existing definitionstions/configuration****
+
+If your applications calls for adding to or modifying only part of the default validators it is best to use the update methods on NgValidations.
+ - To add to or modify the configuration create a new TS object with the control name(s) and associated validators and conditions. Pass the object to updateValidatorConfig() method. Each control has 3 optional properties: required, conditions, and validators.These properties will default to false or [];
+ - To add to or modify the definitions create a new TS object with one or more definitions in the proper format and pass it to the updateValidatorDefinitions method.
+ - You can also update both the configuration and definitions by calling updateDefinitionsAndConfig. This method takes two paramete: A definitions object and a configuration object.
+ - If you only want to change a message on one or more validators call updateValidatorMessages. This mnethod expects an object whose keys match up to the definitions that you want to modify and their associated messages. 
+
+```javascript
+// in your app.module or component.ts
+export class <yourClass> {
+	constructor(private ngValidations: NgValidations){}
+	
+	ngOnInit() {
+        let addConfig = { 
+        		passwordTwo: {
+        			validators: ['validatorOne'],
+                    conditions:[],
+                    required: true
+        		} 
+        	}
+    	let addDef = {
+        	passwordVal: {
+            	passwordVal: function(c: FormControl) {
+                	// Do some validations...
+                }
+                message: 'your message'
+            }
+        }
+        
+        // Update config
+        this.ngValidations.updateValidatorConfig(addConfig)
+        // Update definitions
+        this.ngValidations.updateValidatorDefinitions(addDef);
+        // Or do both
+        this.ngValidations.updateDefinitionsAndConfig(addDef, addConfig);
+        
+        // Update validator messages
+        this.ngValidations.updateValidatorMessages({
+        	passwordVal: 'your new message for passwordVal definition',
+            otherDef: 'your new message for otherDef definition'
+        })
+        
+  	}
+}
+
+``` 
+
+ ****Replacing Default Definitions and/or Configuration****
+ - Create a new TS or JSON configuration file with your control names and their applicable validations and conditions. In your application call the setValidatorConfiguration method and pass in your new file.
  - For custom validator definitions create a new TS object with the definitions for each validator and an associated error message. Call the setValidatorDefinitions method and pass in your new definitions object.
 
  - ** **IMPORTANT** ** Make sure that any new configurations or definitions follow the same pattern as [these](https://github.com/uspto/ng2-validations/tree/master/src/Samples) examples. Deviating from this pattern will likely cause unexpected behavior and your validations may not be applied.
@@ -67,6 +110,9 @@ Ng2-Validations allows you to customize validations by creating your own configu
 ```javascript
 // in app.module.ts
 import { yourNewDefinitions } from '...path/to/yourDefinitions'
+// Either
+import { yourNewConfig } from '...path/to/yourConfig';
+// Or
 const yourNewConfig = require('...path/to/yourConfig.json');
   
 export class <yourAppModule> {
@@ -78,7 +124,7 @@ export class <yourAppModule> {
   }
 }
 ```
-It is also possible to set your validator configuration or definitions from a source through a GET service call.
+It is also possible to override your validator configuration and/or definitions from a source through a GET service call.
 
  -  To retrieve custom configurations call setConfigurationFromSource and pass in your source URL.  This method expects a JSON configuration file to be returned and will apply the new data to its validations.
  - To retrieve custom definitions call setDefinitionsFromSource and pass in your source URL. This method also expects a JSON object consisting of your new validator definitions and error messages of the same pattern as [these](https://github.com/uspto/ng2-validations/blob/master/src/Samples/sample-validation-definitions.ts) .
