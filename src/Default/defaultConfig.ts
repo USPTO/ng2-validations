@@ -25,12 +25,12 @@ export const initialValidationConfig = {
 		'required': true
     },
 	'dateFrom': {
-		'validators': ['dateFormat', 'futureDateFrom'],
+		'validators': ['dateFormat'],
 		'conditions': [],
 		'required': false
 	},
 	'dateTo': {
-		'validators': ['dateFormat', 'futureDateTo'],
+		'validators': ['dateFormat'],
 		'conditions': [],
 		'required': false
 	},
@@ -65,7 +65,7 @@ export const initialValidationConfig = {
 		'required': true
     },
     'phoneNumber': {
-        'validators': ['validPhoneNumberSimple'],
+        'validators': ['phoneNumberSimple'],
 		'conditions': [],
 		'required': true
     },
@@ -90,7 +90,7 @@ export const initialValidationConfig = {
 		'required': false
     },
     'zipCode': {
-        'validators': ['validZipCode'],
+        'validators': ['zipCodeForeign'],
 		'conditions': [],
 		'required': false
     }

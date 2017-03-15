@@ -30,15 +30,9 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
-    futureDateFrom: {
-        futureDateFrom: (c: FormControl) => {
-            noFutureDate: boolean;
-        };
-        message: string;
-    };
-    futureDateTo: {
-        futureDateTo: (c: FormControl) => {
-            noFutureDate: boolean;
+    futureDate: {
+        futureDate: (c: FormControl) => {
+            futureDate: boolean;
         };
         message: string;
     };
@@ -78,9 +72,9 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
-    validPhoneNumberSimple: {
-        validPhoneNumberSimple: (c: FormControl) => {
-            validPhoneNumberSimple: boolean;
+    phoneNumberSimple: {
+        phoneNumberSimple: (c: FormControl) => {
+            phoneNumberSimple: boolean;
         };
         message: string;
     };
@@ -90,9 +84,9 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
-    validZipCode: {
-        validZipCode: (c: FormControl) => {
-            validZipCode: boolean;
+    zipCodeForeign: {
+        zipCodeForeign: (c: FormControl) => {
+            zipCodeForeign: boolean;
         };
         message: string;
     };

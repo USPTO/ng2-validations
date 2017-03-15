@@ -38,7 +38,7 @@ export const validationDefinitions = {
 			let nameTest =  /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
 			return nameTest.test(c.value) ? { firstNameFormat: false } : null;
 		},
-		message: `First name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
+		message: `First Name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
 		(a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), Left Parenthesis ((), 
 		Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), Colon (:), At Sign (@), 
 		Underscore (_).`
@@ -49,7 +49,7 @@ export const validationDefinitions = {
 			let nameTest =  /[^a-z0-9\-_.'\&\(\)\s\,:\/\#\@]/gi;
 			return nameTest.test(c.value) ? { lastNameFormat: false } : null;
 		},
-		message: `Last name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
+		message: `Last Name is limited to the following characters: Uppercase letters (A—Z), Lowercase letters 
 		(a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), Left Parenthesis ((), 
 		Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), Colon (:), At Sign (@), 
 		Underscore (_).`
@@ -64,8 +64,8 @@ export const validationDefinitions = {
 		},
 		message: 'Enter valid date in the format mm/dd/yyyy.'
 	},
-	futureDateFrom: {
-		futureDateFrom : function(c: FormControl) {
+	futureDate: {
+		futureDate: function(c: FormControl) {
             if (!c.value || (!moment(c.value, 'MM-DD-YYYY').isValid() && !moment(c.value, 'YYYY-MM-DD').isValid())) return null;
             let format = 'YYYY-MM-DD';
             if (isNaN(moment(c.value, format).unix())) {
@@ -74,27 +74,11 @@ export const validationDefinitions = {
 			let controlDate = moment(c.value, format).unix();
 			let now = moment().unix();
 			if (controlDate > now) {
-				return { noFutureDate: false };
+				return { futureDate: false };
 			}
 			return null;
 		},
-		message: 'From Date cannot be in the future.'
-	},
-	futureDateTo: {
-		futureDateTo : function(c: FormControl) {
-            if (!c.value || (!moment(c.value, 'MM-DD-YYYY').isValid() && !moment(c.value, 'YYYY-MM-DD').isValid())) return null;
-            let format = 'YYYY-MM-DD';
-            if (isNaN(moment(c.value, format).unix())) {
-                format = 'MM-DD-YYYY';
-            }
-			let controlDate = moment(c.value, format).unix();
-			let now = moment().unix();
-			if (controlDate > now) {
-				return { noFutureDate: false };
-			}
-			return null;
-		},
-		message: 'To Date cannot be in the future.'
+		message: 'Date cannot be in the future.'
 	},
     streetLineOne: {
 		streetLineOne: function(c: FormControl) {
@@ -151,15 +135,15 @@ export const validationDefinitions = {
 			let emailExp = /^[\w+|\.|\+|\-+]+@[\w+]+\.+[a-z.]+$/i;
 			return emailExp.test(c.value) ? null : { validEmail: false };
 		},
-		message: 'Invalid email.'
+		message: 'Enter Email Address in the format name@host.domain.'
 	},
-	validPhoneNumberSimple: {
-		validPhoneNumberSimple: function(c: FormControl) {
+	phoneNumberSimple: {
+		phoneNumberSimple: function(c: FormControl) {
 			if (!c || !c.value) return null;
 			let specialChars = /[^0-9]/g;
-			return specialChars.test(c.value) ? { validPhoneNumberSimple: false } : null;
+			return specialChars.test(c.value) ? { phoneNumberSimple: false } : null;
 		},
-		message: 'Enter phone number without special characters or letters.'
+		message: 'Enter Phone Number in digits only.'
 	},
 	zipCodeUS: {
 		zipCodeUS: function(c: FormControl) {
@@ -167,15 +151,15 @@ export const validationDefinitions = {
 			let codes = /^\b\d{5}(-\d{4})?\b$/;
 			return codes.test(c.value) ? null : { zipCodeUS: false };
 		},
-		message: 'Enter Zip/Postal Code in the format of 99999 or 99999-9999.'
+		message: 'Enter US Zip/Postal Code in the format of 99999 or 99999-9999.'
 	},
-    validZipCode: {
-        validZipCode: function(c: FormControl) {
+    zipCodeForeign: {
+        zipCodeForeign: function(c: FormControl) {
             if (!c || !c.value) return null;
             let specialChars = /[^a-z0-9\-_'\s]/gi;
-			 return specialChars.test(c.value) ? { validZipCode: false } : null;
+			 return specialChars.test(c.value) ? { zipCodeForeign: false } : null;
 		},
-        message: `Zip/Postal Code is limited to the following characters: Uppercase letters (A—Z), 
+        message: `Foreign Zip/Postal Code is limited to the following characters: Uppercase letters (A—Z), 
 		Lowercase letters (a–z), Space ( ), Numbers (0–9), Hyphen (-), Period (.), Apostrophe (‘), Underscore (_).`
     }
 };
