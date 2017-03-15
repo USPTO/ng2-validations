@@ -132,7 +132,7 @@ export const validationDefinitions = {
     validEmail: {
 		validEmail: function(c: FormControl) {
 			if (!c || !c.value) return null;
-			let emailExp = /^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.+[a-zA-Z0–9_.]+$/gi;
+			let emailExp = /^[\w+|\.|\++|-+]+@[\w+]+\.+[a-zA-Z]+$/;
 			return emailExp.test(c.value) ? null : { validEmail: false };
 		},
 		message: 'Invalid email.'

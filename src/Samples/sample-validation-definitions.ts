@@ -5,7 +5,7 @@ import { PhoneNumberUtil } from 'google-libphonenumber';
 
 // Sample validations. This was used in the constructor as an example.
 
-// ======= Test functions for validation =======
+// ======= Example Test functions for validation =======
 // **Important**
 // Angular provides the name of the error on its invalid form controls. This structure makes it easy to loop
 // through the controls and display their associated error messages in the html template
