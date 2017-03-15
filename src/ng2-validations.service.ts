@@ -221,7 +221,7 @@ export class NgValidations {
 		Object.keys(validators).forEach(val => {
 			this.validationDefinitions[val] ? this.validationDefinitions[val].message = validators[val] :
 			console.warn(`Unkown validator name ${val} in updateValidatorMessages()`);
-		})
+		});
 	}
 
 	// ***Call these methods to set validation configuration or definitions from an outside resource***
