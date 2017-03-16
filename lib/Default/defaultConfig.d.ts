@@ -18,7 +18,7 @@ export declare const initialValidationConfig: {
         'validators': any[];
         'conditions': {
             'control': string;
-            'values': string[];
+            'values': RegExp[];
             'tests': string[];
             'required': boolean;
         }[];
@@ -90,7 +90,7 @@ export declare const initialValidationConfig: {
         'required': boolean;
     };
     'zipCode': {
-        'validators': string[];
+        'validators': any[];
         'conditions': any[];
         'required': boolean;
     };

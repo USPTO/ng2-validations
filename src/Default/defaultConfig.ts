@@ -19,8 +19,9 @@ export const initialValidationConfig = {
 	 'countryName': {
         'validators': [],
 		'conditions': [
-			{'control': 'stateName', 'values': ['United States', 'UNITED STATES'], 'tests': [], 'required': true},
-            {'control': 'zipCode', 'values': ['United States', 'UNITED STATES'], 'tests': ['zipCodeUS'], 'required': true}
+			{'control': 'stateName', 'values': [/(?:^|\s)(united states)(?=\s|$)/gi], 'tests': [], 'required': true},
+            {'control': 'zipCode', 'values': [/(?:^|\s)(united states)(?=\s|$)/gi], 'tests': ['zipCodeUS'], 'required': true},
+			{'control': 'zipCode', 'values': [/^((?!united states).)*$/gi], 'tests': ['zipCodeForeign'], 'required': false}
 		],
 		'required': true
     },
@@ -90,7 +91,7 @@ export const initialValidationConfig = {
 		'required': false
     },
     'zipCode': {
-        'validators': ['zipCodeForeign'],
+        'validators': [],
 		'conditions': [],
 		'required': false
     }

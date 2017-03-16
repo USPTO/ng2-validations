@@ -75,8 +75,13 @@ export class NgValidations {
 				let conditionalValidators = [];
 				let controlRequired = false;
 				let requiredValidators = [];
+
+				let found = false;
 				// If controls new value matches condition value
-				if (currentControl && condition.values.indexOf(value) >= 0) {
+				condition.values.forEach(exp => {
+					if (exp.test(value)) found = true;
+				});
+				if (currentControl && found) {
 					// Add condition to conditionsToValidate
 					conditionsToValidate = [...conditionsToValidate, conditions[index]];
 				}
