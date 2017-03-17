@@ -90,7 +90,7 @@ export const validationDefinitions = {
 		message: `Address Line 1 is limited to the following characters: Uppercase letters (A—Z), Lowercase 
 		letters (a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), 
 		Left Parenthesis ((), Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), 
-		Colon (:), At Sign (@), Underscore (_)`
+		Colon (:), At Sign (@), Underscore (_).`
 	},
 	 streetLineTwo: {
 		streetLineTwo: function(c: FormControl) {
@@ -101,7 +101,7 @@ export const validationDefinitions = {
 		message: `Address Line 2 is limited to the following characters: Uppercase letters (A—Z), Lowercase 
 		letters (a–z), Space ( ), Numbers (0–9), Pound Sign (#), Ampersand (&), Apostrophe (‘), 
 		Left Parenthesis ((), Right Parenthesis ()), Comma (,), Hyphen (-), Period (.), Forward Slash(/), 
-		Colon (:), At Sign (@), Underscore (_)`
+		Colon (:), At Sign (@), Underscore (_).`
 	},
 	noSpecialCharsAttorney: {
 		noSpecialCharsAttorney: function(c: FormControl) {
@@ -128,7 +128,7 @@ export const validationDefinitions = {
 			}
 			return null;
 		},
-		message: 'Select at least one payment.'
+		message: 'Select at least one payment from the Payment History.'
 	},
     validEmail: {
 		validEmail: function(c: FormControl) {
