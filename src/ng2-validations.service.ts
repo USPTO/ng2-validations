@@ -94,7 +94,7 @@ export class NgValidations {
 				else if (currentControl && !found && conditionsToValidate.indexOf(condition) >= 0) {
 					// Remove condition
 					console.log('Removed', condition);
-					conditionsToValidate = conditionsToValidate.filter(c => c !== condition);
+					conditionsToValidate = conditionsToValidate.filter(c => JSON.stringify(c) !== JSON.stringify(condition));
 				}
 				// Check if control is required in any of the applied conditions
 				controlRequired = (<any>conditionsToValidate).findIndex(formControl => {
