@@ -80,6 +80,7 @@ export class NgValidations {
 				// Check for match in condition values array
 				condition.values.forEach(exp => {
 					if (exp.test(value)) found = true;
+					console.log('Found', found);
 				});
 
 				if (currentControl && found) {
@@ -90,6 +91,7 @@ export class NgValidations {
 				// tslint:disable-next-line:one-line
 				else if (currentControl && !found && conditionsToValidate.indexOf(condition) >= 0) {
 					// Remove condition
+					console.log('Removed', condition);
 					conditionsToValidate = conditionsToValidate.filter(c => c !== condition);
 				}
 				// Check if control is required in any of the applied conditions
@@ -100,6 +102,7 @@ export class NgValidations {
 				// Map conditionalValidators to validation definitions
 				conditionalValidators = conditionsToValidate.map(c => c.tests.map(this.mapValidators)).reduce((a, b) => a.concat(b), []);
 				requiredValidators = this.checkIfRequired(controlRequired, staticRequired);
+				console.log('Valdators:', conditionalValidators);
 				// Update form control with new validations
 				// <==== If curentControl is not empty or is required
 					// Need Null check to avoid error on finding properties of null values
