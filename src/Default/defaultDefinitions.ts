@@ -136,7 +136,7 @@ export const validationDefinitions = {
 			let emailExp = /^[\w+|\.|\+|\-+]+@[\w+]+\.+[a-z.]+$/i;
 			return emailExp.test(c.value) ? null : { validEmail: false };
 		},
-		message: 'Enter Email Address in the format name@host.domain.'
+		message: 'Enter Email Address in the format: name@host.domain.'
 	},
 	phoneNumberSimple: {
 		phoneNumberSimple: function(c: FormControl) {
