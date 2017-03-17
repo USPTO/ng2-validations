@@ -76,14 +76,6 @@ export class NgValidations {
 				let controlRequired = false;
 				let requiredValidators = [];
 
-				// let found = false;
-				// // If controls new value matches condition value
-				// condition.values.forEach(exp => {
-				// 	if (exp.test(value)) found = true;
-				// 	console.log('FOUND:', found);
-				// 	console.log('Condition:', exp);
-				// 	console.log('Value:', value);
-				// });
 				if (currentControl && condition.value.test(value)) {
 					console.log('FOUND:', true);
 					console.log('Condition:', condition.value);
@@ -110,16 +102,16 @@ export class NgValidations {
 				// Update form control with new validations
 				// <==== If curentControl is not empty or is required
 					// Need Null check to avoid error on finding properties of null values
-				if ((currentControl.value === null || currentControl.value.length) || requiredValidators.length) {
+				// if ((currentControl.value === null || currentControl.value.length) || requiredValidators.length) {
 					currentControl.setValidators([
 						...conditionalValidators,
 						...staticValidators,
 						...requiredValidators
 					]);
 				// If currentControl is empty and not required reset validators to null
-				} else {
-					currentControl.setValidators([]);
-				}
+				// } else {
+				// 	currentControl.setValidators([]);
+				// }
 				console.log('Validators:', conditionalValidators);
 				currentControl.updateValueAndValidity();
 			});
