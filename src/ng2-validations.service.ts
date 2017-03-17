@@ -84,8 +84,7 @@ export class NgValidations {
 				// 	console.log('Condition:', exp);
 				// 	console.log('Value:', value);
 				// });
-				console.log('Condition:', condition.value);
-				if (currentControl && condition.hello) {
+				if (currentControl && condition.value.test(value)) {
 					console.log('FOUND:', true);
 					console.log('Condition:', condition.value);
 					console.log('Value:', value);
