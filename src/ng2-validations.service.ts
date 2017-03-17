@@ -81,11 +81,11 @@ export class NgValidations {
 				condition.values.forEach(exp => {
 					if (exp.test(value)) found = true;
 					console.log(value);
-					console.log('Found', exp.test(value));
+					console.log('Found', found);
 					console.log(`${exp}.test(${value})`);
 				});
 
-				if (currentControl && found) {
+				if (currentControl && found && conditionsToValidate.indexOf(condition) <= 0) {
 					// Add condition to conditionsToValidate
 					conditionsToValidate = [...conditionsToValidate, conditions[index]];
 				}
@@ -94,7 +94,7 @@ export class NgValidations {
 				else if (currentControl && !found && conditionsToValidate.indexOf(condition) >= 0) {
 					// Remove condition
 					console.log('Removed', condition);
-					conditionsToValidate = conditionsToValidate.filter(c => !Object.is(JSON.stringify(c), JSON.stringify(condition)));
+					conditionsToValidate = conditionsToValidate.filter(c => c !== condition);
 				}
 				// Check if control is required in any of the applied conditions
 				controlRequired = (<any>conditionsToValidate).findIndex(formControl => {
