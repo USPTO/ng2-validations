@@ -86,7 +86,7 @@ export class NgValidations {
 				}
 				// If new control value does not match & is in conditionsToValidate array
 				// tslint:disable-next-line:one-line
-				else if (currentControl && conditionsToValidate.indexOf(condition) >= 0) {
+				else if (currentControl && !condition.value.test(value) && conditionsToValidate.indexOf(condition) >= 0) {
 					// Remove condition
 					conditionsToValidate = conditionsToValidate.filter(c => c !== condition);
 					console.log('Removed', condition);
