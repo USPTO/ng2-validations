@@ -80,6 +80,8 @@ export class NgValidations {
 				// If controls new value matches condition value
 				condition.values.forEach(exp => {
 					if (exp.test(value)) found = true;
+					console.log('FOUND:', found);
+					console.log('Condition:', condition.value);
 				});
 				if (currentControl && found) {
 					// Add condition to conditionsToValidate
