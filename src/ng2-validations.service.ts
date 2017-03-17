@@ -77,19 +77,14 @@ export class NgValidations {
 				let requiredValidators = [];
 
 				if (currentControl && condition.value.test(value)) {
-					console.log('FOUND:', true);
-					console.log('Condition:', condition.value);
-					console.log('Value:', value);
 					// Add condition to conditionsToValidate
 					conditionsToValidate = [...conditionsToValidate, conditions[index]];
-					console.log('Adding condition:', conditions[index]);
 				}
 				// If new control value does not match & is in conditionsToValidate array
 				// tslint:disable-next-line:one-line
 				else if (currentControl && !condition.value.test(value) && conditionsToValidate.indexOf(condition) >= 0) {
 					// Remove condition
 					conditionsToValidate = conditionsToValidate.filter(c => c !== condition);
-					console.log('Removed', condition);
 				}
 				// Check if control is required in any of the applied conditions
 				controlRequired = (<any>conditionsToValidate).findIndex(formControl => {
@@ -97,10 +92,8 @@ export class NgValidations {
 				}) >= 0;
 
 				// Map conditionalValidators to validation definitions
-				console.log('Validators Pre-Map:', conditionalValidators);
 				conditionalValidators = conditionsToValidate.map(c => c.tests.map(this.mapValidators)).reduce((a, b) => a.concat(b), []);
 				requiredValidators = this.checkIfRequired(controlRequired, staticRequired);
-				console.log('Validators Post-Map:', conditionalValidators);
 				// Update form control with new validations
 				// <==== If curentControl is not empty or is required
 					// Need Null check to avoid error on finding properties of null values
