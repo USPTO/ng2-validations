@@ -19,12 +19,9 @@ export const initialValidationConfig = {
 	 'countryName': {
         'validators': [],
 		'conditions': [
-			{'control': 'stateName', 'values': [/u/gi], 'tests': [], 'required': true},
-            {'control': 'zipCode', 'values': [/uu/gi], 'tests': ['zipCodeUS'], 'required': true},
-			{'control': 'zipCode', 'values': [/s/gi], 'tests': ['zipCodeForeign'], 'required': false}
-			// {'control': 'stateName', 'values': [/(?:^|\s)(united states)(?=\s|$)/gi], 'tests': [], 'required': true},
-            // {'control': 'zipCode', 'values': [/(?:^|\s)(united states)(?=\s|$)/gi], 'tests': ['zipCodeUS'], 'required': true},
-			// {'control': 'zipCode', 'values': [/^((?!united states).)*$/gi], 'tests': ['zipCodeForeign'], 'required': false}
+			{'control': 'stateName', 'values': [/(?:^|\s)(united states)(?=\s|$)/gi], 'tests': [], 'required': true},
+            {'control': 'zipCode', 'values': [/(?:^|\s)(united states)(?=\s|$)/gi], 'tests': ['zipCodeUS'], 'required': true},
+			{'control': 'zipCode', 'values': [/^((?!united states).)*$/gi], 'tests': ['zipCodeForeign'], 'required': false}
 		],
 		'required': true
     },
