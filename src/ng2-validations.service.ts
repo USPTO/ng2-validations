@@ -65,8 +65,8 @@ export class NgValidations {
 		// Subscribe to form control value changes
 		const changes = form.controls[control].valueChanges;
 		// Execute function on any formControl value change...will update validations if match
+		let conditionsToValidate: Array<any> = [];
 		changes.subscribe(value => {
-			let conditionsToValidate: Array<any> = [];
 			// Check each condition on value change
 			conditions.forEach((condition, index) => {
 				const currentControl = form.controls[condition.control];
