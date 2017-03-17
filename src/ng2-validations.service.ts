@@ -118,6 +118,7 @@ export class NgValidations {
 				} else {
 					currentControl.setValidators([]);
 				}
+				console.log('Validators:', conditionalValidators);
 				currentControl.updateValueAndValidity();
 			});
 		});
