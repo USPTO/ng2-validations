@@ -81,7 +81,8 @@ export class NgValidations {
 				condition.values.forEach(exp => {
 					if (exp.test(value)) found = true;
 					console.log('FOUND:', found);
-					console.log('Condition:', condition.value);
+					console.log('Condition:', exp);
+					console.log('Value:', value);
 				});
 				if (currentControl && found) {
 					// Add condition to conditionsToValidate
