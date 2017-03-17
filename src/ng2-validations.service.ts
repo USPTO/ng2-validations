@@ -76,15 +76,18 @@ export class NgValidations {
 				let controlRequired = false;
 				let requiredValidators = [];
 
-				let found = false;
-				// If controls new value matches condition value
-				condition.values.forEach(exp => {
-					if (exp.test(value)) found = true;
-					console.log('FOUND:', found);
-					console.log('Condition:', exp);
+				// let found = false;
+				// // If controls new value matches condition value
+				// condition.values.forEach(exp => {
+				// 	if (exp.test(value)) found = true;
+				// 	console.log('FOUND:', found);
+				// 	console.log('Condition:', exp);
+				// 	console.log('Value:', value);
+				// });
+				if (currentControl && condition.value.test(value)) {
+					console.log('FOUND:', true);
+					console.log('Condition:', condition.value);
 					console.log('Value:', value);
-				});
-				if (currentControl && found) {
 					// Add condition to conditionsToValidate
 					conditionsToValidate = [...conditionsToValidate, conditions[index]];
 				}

@@ -18,7 +18,7 @@ export declare const initialValidationConfig: {
         'validators': any[];
         'conditions': {
             'control': string;
-            'values': RegExp[];
+            'value': RegExp[];
             'tests': string[];
             'required': boolean;
         }[];
