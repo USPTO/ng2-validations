@@ -78,6 +78,12 @@ export declare const validationDefinitions: {
         };
         message: string;
     };
+    USD: {
+        USD: (c: FormControl) => {
+            USD: boolean;
+        };
+        message: string;
+    };
     zipCodeUS: {
         zipCodeUS: (c: FormControl) => {
             zipCodeUS: boolean;

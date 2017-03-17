@@ -146,6 +146,13 @@ export const validationDefinitions = {
 		},
 		message: 'Enter Phone Number in digits only.'
 	},
+	USD: {
+		USD: function(c: FormControl) {
+			if (!c || !c.value) return null;
+			return /^\d+(,\d{3})*(\.[0-9]{2})?$/.test(c.value) ? null : { USD: false };
+		},
+		message: 'Enter Amount in USD format.'
+	},
 	zipCodeUS: {
 		zipCodeUS: function(c: FormControl) {
 			if (!c || !c.value) return null;

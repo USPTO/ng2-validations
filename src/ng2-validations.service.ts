@@ -75,14 +75,20 @@ export class NgValidations {
 				let conditionalValidators = [];
 				let controlRequired = false;
 				let requiredValidators = [];
+				let found = false;
 
-				if (currentControl && condition.value.test(value)) {
+				// Check for match in condition values array
+				condition.values.forEach(exp => {
+					if (exp.test(value)) found = true;
+				});
+
+				if (currentControl && found) {
 					// Add condition to conditionsToValidate
 					conditionsToValidate = [...conditionsToValidate, conditions[index]];
 				}
 				// If new control value does not match & is in conditionsToValidate array
 				// tslint:disable-next-line:one-line
-				else if (currentControl && !condition.value.test(value) && conditionsToValidate.indexOf(condition) >= 0) {
+				else if (currentControl && !found && conditionsToValidate.indexOf(condition) >= 0) {
 					// Remove condition
 					conditionsToValidate = conditionsToValidate.filter(c => c !== condition);
 				}
