@@ -64,9 +64,9 @@ export class NgValidations {
 
 		// Subscribe to form control value changes
 		const changes = form.controls[control].valueChanges;
+		let conditionsToValidate: Array<any> = [];
 		// Execute function on any formControl value change...will update validations if match
 		changes.subscribe(value => {
-			let conditionsToValidate: Array<any> = [];
 			// Check each condition on value change
 			conditions.forEach((condition, index) => {
 				const currentControl = form.controls[condition.control];
@@ -79,13 +79,12 @@ export class NgValidations {
 
 				// Check for match in condition values array
 				condition.values.forEach(exp => {
-					if (exp.test(value)) found = true;
-					console.log(value);
-					console.log('Found', found);
-					console.log(`${exp}.test(${value})`);
+					// Assign variable to expression to avoid advancing pass previous match
+					let reg = exp;
+					if (reg.test(value)) found = true;
 				});
 
-				if (currentControl && found && conditionsToValidate.indexOf(condition) <= 0) {
+				if (currentControl && found && conditionsToValidate.indexOf(condition) < 0) {
 					// Add condition to conditionsToValidate
 					conditionsToValidate = [...conditionsToValidate, conditions[index]];
 				}
