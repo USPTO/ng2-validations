@@ -80,7 +80,9 @@ export class NgValidations {
 				// Check for match in condition values array
 				condition.values.forEach(exp => {
 					if (exp.test(value)) found = true;
-					console.log('Found', found);
+					console.log(value);
+					console.log('Found', exp.test(value));
+					console.log(`${exp}.test(${value})`);
 				});
 
 				if (currentControl && found) {
