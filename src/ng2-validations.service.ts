@@ -79,8 +79,9 @@ export class NgValidations {
 
 				// Check for match in condition values array
 				condition.values.forEach(exp => {
-					// Assign variable to expression to avoid advancing pass previous match
-					let reg = exp;
+					// Assign variable to expression to avoid advancing past previous match
+					exp.flags = exp.flags || '';
+					let reg = new RegExp(exp.pattern, exp.flags);
 					if (reg.test(value)) found = true;
 				});
 
@@ -92,7 +93,7 @@ export class NgValidations {
 				// tslint:disable-next-line:one-line
 				else if (currentControl && !found && conditionsToValidate.indexOf(condition) >= 0) {
 					// Remove condition
-					console.log('Removed', condition);
+					// console.log('Removed', condition);
 					conditionsToValidate = conditionsToValidate.filter(c => JSON.stringify(c) !== JSON.stringify(condition));
 				}
 				// Check if control is required in any of the applied conditions
@@ -103,7 +104,7 @@ export class NgValidations {
 				// Map conditionalValidators to validation definitions
 				conditionalValidators = conditionsToValidate.map(c => c.tests.map(this.mapValidators)).reduce((a, b) => a.concat(b), []);
 				requiredValidators = this.checkIfRequired(controlRequired, staticRequired);
-				console.log('Valdators:', conditionalValidators);
+				// console.log('Valdators:', conditionalValidators);
 				// Update form control with new validations
 				// <==== If curentControl is not empty or is required
 					// Need Null check to avoid error on finding properties of null values
