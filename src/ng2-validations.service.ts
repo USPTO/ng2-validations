@@ -102,9 +102,10 @@ export class NgValidations {
 				}) >= 0;
 
 				// Map conditionalValidators to validation definitions
-				conditionalValidators = conditionsToValidate.map(c => c.tests.map(this.mapValidators)).reduce((a, b) => a.concat(b), []);
+				conditionalValidators = conditionsToValidate.filter(c => c.control === condition.control).map(c => c.tests.map(this.mapValidators)).reduce((a, b) => a.concat(b), []);
 				requiredValidators = this.checkIfRequired(controlRequired, staticRequired);
-				// console.log('Valdators:', conditionalValidators);
+				console.log('Control', condition.control);
+				console.log('Valdators:', conditionalValidators);
 				// Update form control with new validations
 				// <==== If curentControl is not empty or is required
 					// Need Null check to avoid error on finding properties of null values
