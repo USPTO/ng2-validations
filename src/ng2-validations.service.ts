@@ -98,7 +98,7 @@ export class NgValidations {
 				}
 				// Check if control is required in any of the applied conditions
 				controlRequired = (<any>conditionsToValidate).findIndex(formControl => {
-					return formControl.required === true;
+					return formControl.control === condition.control && formControl.required === true;
 				}) >= 0;
 
 				// Map conditionalValidators to validation definitions
