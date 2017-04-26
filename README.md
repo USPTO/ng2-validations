@@ -60,7 +60,7 @@ If your application calls for adding to or modifying only part of the default va
  - To add to or modify the definitions create a new TS object with one or more definitions in the proper format and pass it to the updateValidatorDefinitions method.
  - You can also update both the configuration and definitions by calling updateDefinitionsAndConfig. This method takes two parameters: A definitions object and a configuration object.
  - If you only want to change a message on one or more validators call updateValidatorMessages. This method expects an object whose keys match up to the definitions that you want to modify and their associated messages. 
- -  ** **IMPORTANT** ** Ng2Validations matches form controls to the keys in the configuration object. Therefore the keys must be the same as your form contorl names.
+ -  ** **IMPORTANT** ** Ng2Validations matches form controls to the keys in the configuration object. Therefore, the keys must be the same as your form control names.
 
 
 ```javascript
@@ -109,7 +109,7 @@ export class <yourClass> {
  - Create a new TS or JSON configuration file with your control names and their applicable validations and conditions. In your application call the setValidatorConfiguration method and pass in your new file.
  - For custom validator definitions create a new TS object with the definitions for each validator and an associated error message. Call the setValidatorDefinitions method and pass in your new definitions object.
 
- - ** **IMPORTANT** ** Make sure that any new configurations or definitions follow the same pattern as [these](https://github.com/uspto/ng2-validations/tree/master/src/Default) examples. Remeber the keys must be the same as your form contorl names. Deviating from this pattern will likely cause unexpected behavior and your validations may not be applied.
+ - ** **IMPORTANT** ** Make sure that any new configurations or definitions follow the same pattern as [these](https://github.com/uspto/ng2-validations/tree/master/src/Default) examples. Remeber, the keys must be the same as your form control names. Deviating from this pattern will likely cause unexpected behavior and your validations may not be applied.
 
 ```javascript
 // in app.module.ts
